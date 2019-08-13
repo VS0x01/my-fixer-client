@@ -1,0 +1,30 @@
+=tablets
+  @media screen and (max-width: 1024px)
+    @content
+
+=phones
+  @media screen and (max-width: 720px)
+    @content
+
+=scrollbar($bgthumb, $bgtrack, $dims_scroll)
+  &::-webkit-scrollbar-thumb
+    background: $bgthumb
+    border-radius: 4px
+    mix-blend-mode: normal
+    opacity: 0.1
+
+  &::-webkit-scrollbar
+    width: $dims_scroll
+    height: $dims_scroll
+
+  &::-webkit-scrollbar-track
+    background: $bgtrack
+    border-radius: 4px
+    mix-blend-mode: normal
+    opacity: 0.05
+
+=fixdims($w, $h)
+  min-width: $w
+  max-width: $w
+  min-height: $h
+  max-height: $h
