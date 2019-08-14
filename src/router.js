@@ -1,8 +1,10 @@
 import VueRouter from 'vue-router';
-import Auth from "@/auth/views/Auth";
+import SignIn from "@/auth/views/SignIn";
+import SignUp from "@/auth/views/SignUp";
 
 const routes = [
-  { path: '/auth', component: Auth }
+  { path: '/sign-in', component: SignIn },
+  { path: '/sign-up', component: SignUp },
 ]
 
 const router = new VueRouter({
