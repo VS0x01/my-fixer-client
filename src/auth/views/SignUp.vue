@@ -1,8 +1,8 @@
 <template>
   <div>
     <auth-header-component
-        question="Already have an account?"
-        :link="{ URL: '/sign-in', text: 'Sing in'}"
+        question="Already have an account? "
+        :link="{ URL: '/sign-in', text: 'Sign in'}"
     ></auth-header-component>
     <main class="content">
       <form class="auth-form">
