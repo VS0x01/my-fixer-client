@@ -23,11 +23,11 @@
   import AuthHeaderComponent from "@/auth/components/AuthHeaderComponent";
 
   export default {
-    name: "SignUp",
-    components: {AuthHeaderComponent}
+    name: 'SignUp',
+    components: {AuthHeaderComponent},
   }
 </script>
 
 <style lang="sass" scoped>
-  @import "sass/auth"
+  @import 'sass/auth'
 </style>

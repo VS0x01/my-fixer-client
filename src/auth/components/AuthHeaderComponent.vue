@@ -63,7 +63,7 @@
 
 <script>
   export default {
-    name: "AuthHeaderComponent",
+    name: 'AuthHeaderComponent',
     props: {
       question: String,
       link: Object,
