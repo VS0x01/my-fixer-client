@@ -148,18 +148,21 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import '../../components/sass/mixins'
+
 .header
   display: flex
-  align-items: center
   justify-content: space-between
 
 .logo svg
   width: 138px
-  margin: 20px 0 0 141px
+  margin: 2px 0 0 141px
+  +phones
+    margin-left: 20px
 
 .link
   text-decoration: none
-  margin: 0 137px 0 0
+  margin: 28px 137px 0 0
   font-family: Roboto, sans-serif
   font-style: normal
   font-weight: 300
@@ -167,6 +170,9 @@ export default {
   line-height: 19px
   letter-spacing: 0.28px
   color: #222428
+
+  +phones
+    margin: 28px 20px
 
   a
     color: #2A74DB

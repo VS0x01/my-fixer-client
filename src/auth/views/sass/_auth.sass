@@ -1,7 +1,9 @@
+@import '../../../components/sass/mixins'
+
 body
   background: #F9FAFC
 
-#app
+#auth
   display: flex
   flex-direction: column
 
@@ -21,14 +23,18 @@ body
 
 .content
   display: flex
+  align-self: center
   flex-direction: column
-  min-width: 335px
-  width: 35%
+  width: 400px
   margin: 130px auto 0 auto
-  padding: 114px 72px
+  padding: 72px 116px 80px 116px
   background: #FFF
   box-shadow: 0 5px 40px rgba(0, 45, 113, 0.06)
   border-radius: 10px
+
+  +phones
+    padding: 16px
+    margin: 0
 
 h1
   font-family: 'Exo 2', sans-serif
@@ -40,21 +46,18 @@ h1
   color: #002396
 
 .auth-form
-  align-self: center
   display: flex
   flex-direction: column
-  width: 400px
 
 .auth-form__input-group
   display: flex
+  justify-content: space-between
 
   .auth-form__input
     width: 190px
-    margin: 12px 20px 12px 0
 
 .auth-form__input
   box-sizing: border-box
-  width: 400px
   height: 40px
   margin: 12px 0
   padding: 13px

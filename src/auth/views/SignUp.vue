@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="auth">
     <auth-header-component
       question="Already have an account? "
       :link="{ URL: '/sign-in', text: 'Sign in' }"
