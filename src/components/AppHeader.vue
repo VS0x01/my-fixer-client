@@ -10,43 +10,43 @@
 </template>
 
 <script>
-    export default {
-        name: "HeaderComponent"
-    }
+export default {
+  name: "AppHeader"
+};
 </script>
 
 <style lang="sass" scoped>
-  .header
-    display: flex
-    align-items: center
-    position: relative
-    margin-left: 80px
-    height: 60px
-    background: #FFF
-    border-bottom: 1px solid #DAE4F2
+.header
+  display: flex
+  align-items: center
+  position: relative
+  margin-left: 80px
+  height: 60px
+  background: #FFF
+  border-bottom: 1px solid #DAE4F2
 
   .breadcrumbs
     list-style: none
     font-size: 0
 
-    li
-      display: inline
-      font-family: Roboto, sans-serif
-      font-style: normal
-      font-weight: normal
-      font-size: 13px
-      line-height: 15px
-      letter-spacing: 0.685714px
-      color: #252F48
+  li
+    display: inline
+    font-family: Roboto, sans-serif
+    font-style: normal
+    font-weight: normal
+    font-size: 13px
+    line-height: 15px
+    letter-spacing: 0.685714px
+    color: #252F48
 
+    &::after
+      content: ">"
+      margin: 0 12px 0 12px
+      color: #0AD69C
+
+    &:last-of-type
       &::after
-        content: ">"
-        margin: 0 12px 0 12px
-        color: #0AD69C
-
-      &:last-of-type
-        &::after
-          display: none
+        display: none
 
   .header__person-photo
     margin: 0 9px 0 auto
