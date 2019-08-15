@@ -202,7 +202,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import "sass/mixins"
+@import "../shared/sass/mixins"
 
 .menu
   display: flex

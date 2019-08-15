@@ -148,7 +148,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import '../../components/sass/mixins'
+@import '../../shared/sass/mixins'
 
 .header
   display: flex
@@ -157,28 +157,21 @@ export default {
 .logo svg
   width: 138px
   margin: 2px 0 0 141px
+
   +phones
+    width: 75%
     margin-left: 20px
 
 .link
-  text-decoration: none
-  margin: 28px 137px 0 0
-  font-family: Roboto, sans-serif
-  font-style: normal
-  font-weight: 300
-  font-size: 16px
-  line-height: 19px
-  letter-spacing: 0.28px
-  color: #222428
+  margin: 28px 137px 0 0 !important
 
   +phones
     white-space: nowrap
     display: flex
     flex-flow: row wrap
-    margin: 28px 8px
+    margin: 28px 8px !important
 
   a
-    color: #2A74DB
     +phones
-      margin-left: auto
+      margin: auto
 </style>
