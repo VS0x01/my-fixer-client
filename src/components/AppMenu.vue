@@ -216,6 +216,7 @@ export default {
   background-color: #01134E
   +tablets
     width: 100%
+    height: 80px
     flex-direction: row
 
 .logo
