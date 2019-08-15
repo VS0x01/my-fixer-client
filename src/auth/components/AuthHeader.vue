@@ -172,8 +172,13 @@ export default {
   color: #222428
 
   +phones
-    margin: 28px 20px
+    white-space: nowrap
+    display: flex
+    flex-flow: row wrap
+    margin: 28px 8px
 
   a
     color: #2A74DB
+    +phones
+      margin-left: auto
 </style>
