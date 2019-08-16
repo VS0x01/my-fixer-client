@@ -19,7 +19,6 @@ export default {
 @import "./shared/sass/mixins"
 
 body
-  height: 100vh
   margin: 0
   padding: 0
   background: #F9FAFC

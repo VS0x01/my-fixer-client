@@ -1,32 +1,85 @@
 <template>
-  <div class="menu__item">
-    <router-link to="/" active-class="menu__item_enabled">
-      <svg
-          width="20"
-          height="17"
-          viewBox="0 0 20 17"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-            d="M1.9196 5.31729C2.1726 5.49863 2.93522 6.03719 4.20752 6.9327C5.47985 7.82821 6.45455 8.51773 7.13164 9.0013C7.20603 9.05431 7.36408 9.16953 7.60585 9.34713C7.84767 9.52485 8.0486 9.66847 8.20848 9.77801C8.36848 9.88752 8.5619 10.0104 8.78894 10.1464C9.0159 10.2822 9.22985 10.3844 9.43074 10.4521C9.63167 10.5203 9.81766 10.5541 9.98876 10.5541H9.99998H10.0112C10.1823 10.5541 10.3684 10.5203 10.5693 10.4521C10.7702 10.3844 10.9843 10.2821 11.2111 10.1464C11.4379 10.0102 11.6314 9.88748 11.7914 9.77801C11.9514 9.66847 12.1521 9.52485 12.394 9.34713C12.6358 9.16937 12.794 9.05431 12.8684 9.0013C13.5528 8.51773 15.294 7.28961 18.0915 5.31705C18.6347 4.93179 19.0884 4.46693 19.453 3.92277C19.8178 3.37884 20 2.80824 20 2.21127C20 1.71242 19.8232 1.28539 19.4697 0.930225C19.1163 0.574983 18.6977 0.397461 18.2142 0.397461H1.78564C1.21276 0.397461 0.77189 0.593922 0.463111 0.986845C0.15437 1.37985 0 1.87108 0 2.4605C0 2.93661 0.20468 3.45254 0.613846 4.00797C1.02297 4.56345 1.45837 4.99993 1.9196 5.31729Z"
-            fill="white"
-        />
-        <path
-            d="M18.8838 6.53014C16.4435 8.20773 14.5906 9.51149 13.3259 10.4411C12.9018 10.7584 12.5578 11.0061 12.2936 11.1836C12.0293 11.3612 11.678 11.5426 11.2389 11.7276C10.8 11.913 10.3909 12.0054 10.0114 12.0054H10H9.9888C9.60934 12.0054 9.20006 11.913 8.76115 11.7276C8.32224 11.5426 7.97061 11.3612 7.70647 11.1836C7.44241 11.0061 7.09826 10.7584 6.6742 10.4411C5.66968 9.69302 3.82075 8.38918 1.12734 6.53014C0.703129 6.24315 0.327387 5.9142 0 5.54395V14.5445C0 15.0436 0.174776 15.4704 0.524523 15.8256C0.874192 16.1809 1.29465 16.3585 1.78575 16.3585H18.2144C18.7053 16.3585 19.1258 16.1809 19.4755 15.8256C19.8253 15.4703 20 15.0437 20 14.5445V5.54395C19.68 5.90653 19.3081 6.23549 18.8838 6.53014Z"
-            fill="white"
-        />
-      </svg>
-    </router-link>
-  </div>
+  <router-link
+    :to="link"
+    tag="div"
+    class="menu__item"
+    :class="{ 'menu__item_with-notification': notifications }"
+    active-class="menu__item_enabled"
+    :data-notifications-number="notifications"
+  >
+    <svg
+      :width="width"
+      :height="height"
+      :viewBox="viewBox"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <slot />
+    </svg>
+  </router-link>
 </template>
 
 <script>
-  export default {
-    name: "AppMenuItem"
-  };
+export default {
+  name: "AppMenuItem",
+  props: {
+    link: {
+      type: [Object, String]
+    },
+    notifications: {
+      type: Number,
+      default: 0
+    },
+    width: {
+      type: [Number, String],
+      default: 18
+    },
+    height: {
+      type: [Number, String],
+      default: 18
+    },
+    viewBox: {
+      type: String,
+      default: "0 0 18 18"
+    }
+  }
+};
 </script>
 
-<style scoped>
+<style lang="sass" scoped>
+.menu__item
+  position: relative
+  height: 48px
+  padding: 12px 0 12px 0
+  display: flex
+  justify-content: center
+  align-items: center
+  width: inherit
 
+.menu__item_with-notification
+  &::after
+    content: attr(data-notifications-number)
+    position: absolute
+    z-index: 1
+    width: 19px
+    height: 19px
+    top: 19px
+    right: 20px
+    background-color: #2A74DB
+    border-radius: 50%
+    text-align: center
+    font-family: Roboto, sans-serif
+    font-style: normal
+    font-weight: bold
+    font-size: 12px
+    line-height: 20px
+    letter-spacing: 0.28px
+    color: #FFFFFF
+
+.menu__item_enabled
+  &::before
+    content: url("data:image/svg+xml,%3Csvg width='4' height='48' viewBox='0 0 4 48' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='4' height='48' fill='%230AD69C'/%3E%3C/svg%3E%0A")
+    position: absolute
+    top: 14px
+    left: 0
 </style>

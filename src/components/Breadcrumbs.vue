@@ -1,13 +1,21 @@
 <template>
   <ul class="breadcrumbs">
-    <li>Home</li>
-    <li>Network</li>
+    <li v-for="(breadcrumb, i) in breadcrumbs" :key="i">{{ breadcrumb | capitalize }}</li>
   </ul>
 </template>
 
 <script>
 export default {
-  name: "Breadcrumbs"
+  name: "Breadcrumbs",
+  data() {
+    return {
+    };
+  },
+  computed: {
+    breadcrumbs() {
+      return ['Home'].concat(this.$route.path.split('/').filter((breadcrumb) => !!breadcrumb));
+    }
+  }
 };
 </script>
 
