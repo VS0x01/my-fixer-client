@@ -1,17 +1,17 @@
 <template>
   <header class="header">
-    <ul class="breadcrumbs">
-      <li>Home</li>
-      <li>Network</li>
-    </ul>
+    <BreadcrumbsComponent />
     <img class="header__person-photo" src="@/assets/sarah_freeman.png" />
     <span class="header__person-name">Sarah Freeman</span>
   </header>
 </template>
 
 <script>
+import BreadcrumbsComponent from "@/components/Breadcrumbs";
+
 export default {
-  name: "AppHeader"
+  name: "AppHeader",
+  components: { BreadcrumbsComponent }
 };
 </script>
 
@@ -24,29 +24,6 @@ export default {
   height: 60px
   background: #FFF
   border-bottom: 1px solid #DAE4F2
-
-  .breadcrumbs
-    list-style: none
-    font-size: 0
-
-  li
-    display: inline
-    font-family: Roboto, sans-serif
-    font-style: normal
-    font-weight: normal
-    font-size: 13px
-    line-height: 15px
-    letter-spacing: 0.685714px
-    color: #252F48
-
-    &::after
-      content: ">"
-      margin: 0 12px 0 12px
-      color: #0AD69C
-
-    &:last-of-type
-      &::after
-        display: none
 
   .header__person-photo
     margin: 0 9px 0 auto
