@@ -56,6 +56,9 @@ export default {
   align-items: center
   width: inherit
 
+  svg
+    cursor: pointer
+
 .menu__item_with-notification
   &::after
     content: attr(data-notifications-number)
