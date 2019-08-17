@@ -246,7 +246,6 @@ export default {
 
 .dialogs
   display: grid
-  grid-template-columns: 1fr
   grid-auto-rows: 91px
   flex: 0 0 auto
   overflow-y: scroll
@@ -322,8 +321,6 @@ export default {
 
 .dialog__person-strings
   display: grid
-  grid-template-columns: 1fr
-  grid-template-rows: 1fr auto auto
   flex-grow: 1
   align-self: flex-start
   +tablets
@@ -377,8 +374,8 @@ export default {
   opacity: 0.43
 
 .messages
+  flex: 1 1 auto
   display: grid
-  grid-template-columns: 1fr
   grid-template-rows: 47px 1fr 61px
   overflow-x: scroll
   background: #FFFFFF
