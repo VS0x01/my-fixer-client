@@ -1,7 +1,7 @@
 <template>
   <div id="messenger">
-    <AppHeaderComponent />
-    <AppMenuComponent />
+    <app-header-component />
+    <app-menu-component />
 
     <main class="content">
       <section class="dialogs">

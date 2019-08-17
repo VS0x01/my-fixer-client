@@ -1,0 +1,61 @@
+<template>
+  <label for="location" class="input-label">
+    Location
+    <div class="select">
+      <slot />
+      <select id="location" class="input">
+        <option>Ukraine</option>
+        <option>Canada</option>
+      </select>
+    </div>
+  </label>
+</template>
+<script>
+export default {
+  name: "SelectBase"
+};
+</script>
+<style lang="sass" scoped>
+@import "../shared/sass/mixins"
+
+.input-label
+  font-family: Roboto, sans-serif
+  font-style: normal
+  font-weight: 500
+  font-size: 12px
+  line-height: 14px
+  letter-spacing: 1px
+  text-transform: uppercase
+  color: #546087
+
+.select
+  display: flex
+  align-items: center
+  justify-content: space-around
+  width: 250px
+  border: 2px solid #F2F2F2
+  border-radius: 2px
+  background: #FCFCFC
+
+  &::before
+    content: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.39626 5.15214L0.683169 1.38059C0.44685 1.14068 0.44685 0.751695 0.683169 0.511895C0.919278 0.272077 1.30222 0.272077 1.53831 0.511895L4.82383 3.84913L8.10923 0.511992C8.34543 0.272174 8.72834 0.272174 8.96445 0.511992C9.20065 0.751811 9.20065 1.14077 8.96445 1.38069L5.2513 5.15224C5.13319 5.27214 4.97856 5.33203 4.82385 5.33203C4.66906 5.33203 4.51431 5.27203 4.39626 5.15214Z' fill='%2301134E'/%3E%3C/svg%3E%0A")
+    position: relative
+    left: 225px
+    pointer-events: none
+
+.input
+  appearance: none
+  flex: 1 0 auto
+  height: 41px
+  padding: 10px 0 10px 4px
+  border: none
+  background: inherit
+  outline: none
+  font-family: Roboto, sans-serif
+  font-style: normal
+  font-weight: normal
+  font-size: 14px
+  line-height: 16px
+  letter-spacing: 0.28px
+  color: #35373B
+</style>
