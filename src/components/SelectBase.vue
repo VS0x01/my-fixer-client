@@ -1,40 +1,39 @@
 <template>
-  <label for="location" class="input-label">
-    Location
+  <label :for="id" class="input-label">
+    {{ id }}
     <div class="select">
       <slot />
-      <select id="location" class="input">
-        <option>Ukraine</option>
-        <option>Canada</option>
+      <select :id="id" class="input">
+        <option v-for="(option, i) in options" :key="i">{{ option }}</option>
       </select>
     </div>
   </label>
 </template>
 <script>
 export default {
-  name: "SelectBase"
+  name: "SelectBase",
+  props: {
+    id: {
+      type: String
+    },
+    options: {
+      type: Array
+    }
+  }
 };
 </script>
 <style lang="sass" scoped>
 @import "../shared/sass/mixins"
 
-.input-label
-  font-family: Roboto, sans-serif
-  font-style: normal
-  font-weight: 500
-  font-size: 12px
-  line-height: 14px
-  letter-spacing: 1px
-  text-transform: uppercase
-  color: #546087
-
 .select
   display: flex
   align-items: center
   justify-content: space-around
+  box-sizing: border-box
   width: 250px
   border: 2px solid #F2F2F2
   border-radius: 2px
+  margin-bottom: 20.37px
   background: #FCFCFC
 
   &::before
@@ -46,7 +45,7 @@ export default {
 .input
   appearance: none
   flex: 1 0 auto
-  height: 41px
+  height: 37px
   padding: 10px 0 10px 4px
   border: none
   background: inherit

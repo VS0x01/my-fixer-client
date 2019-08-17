@@ -2,10 +2,11 @@
   <div id="search">
     <app-header-component />
     <app-menu-component />
+
     <main class="content">
       <form class="search-form">
         <section class="inputs-section">
-          <select-base-component>
+          <select-base-component id="location" :options="['Canada', 'Ukraine']">
             <svg
               class="location"
               width="8"
@@ -20,6 +21,33 @@
               />
             </svg>
           </select-base-component>
+
+          <label for="query" class="input-label">Search</label>
+          <input
+            type="search"
+            id="query"
+            class="input"
+            placeholder="Type your query..."
+          />
+
+          <select-base-component
+            id="category"
+            :options="['Category1', 'Category2']"
+          />
+          <select-base-component
+            id="service"
+            :options="['3 services', '4 services']"
+          />
+
+          <label class="input-label">Period</label>
+          <date-range-picker
+            ref="picker"
+            :locale-data="{ firstDay: 1, format: 'DD/MM/YYYY' }"
+            v-model="dateRange">
+            <div slot="input" slot-scope="picker" style="min-width: 350px;">
+              {{ picker.startDate }} - {{ picker.endDate }}
+            </div>
+          </date-range-picker>
         </section>
       </form>
     </main>
@@ -30,10 +58,22 @@
 import AppHeaderComponent from "@/components/AppHeader";
 import AppMenuComponent from "@/components/AppMenu";
 import SelectBaseComponent from "@/components/SelectBase";
+import DateRangePicker from "vue2-daterange-picker";
+import "vue2-daterange-picker/dist/vue2-daterange-picker.css";
 
 export default {
   name: "Search",
-  components: { AppHeaderComponent, AppMenuComponent, SelectBaseComponent }
+  components: {
+    AppHeaderComponent,
+    AppMenuComponent,
+    SelectBaseComponent,
+    DateRangePicker
+  },
+  data() {
+    return {
+      dateRange: {},
+    };
+  }
 };
 </script>
 
@@ -58,6 +98,38 @@ export default {
   display: flex
   flex-flow: column nowrap
 
+.input-label
+  font-family: Roboto, sans-serif
+  font-style: normal
+  font-weight: 500
+  font-size: 12px
+  line-height: 14px
+  letter-spacing: 1px
+  text-transform: uppercase
+  color: #546087
+
 .location
   margin: 0 4px
+
+.input
+  box-sizing: border-box
+  width: 250px
+  height: 41px
+  padding: 10px 0 10px 4px
+  border: 2px solid #F2F2F2
+  border-radius: 2px
+  margin-bottom: 20.37px
+  background: #FCFCFC
+  outline: none
+  font-family: Roboto, sans-serif
+  font-style: normal
+  font-weight: normal
+  font-size: 14px
+  line-height: 16px
+  letter-spacing: 0.28px
+  color: #35373B
+
+.date
+  border: none
+  outline: none
 </style>
