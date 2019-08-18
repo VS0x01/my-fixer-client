@@ -1,14 +1,12 @@
 <template>
-  <label :for="id" class="input-label">
-    {{ id }}
     <div class="select">
       <slot />
-      <select :id="id" class="input">
+      <select class="input">
         <option v-for="(option, i) in options" :key="i">{{ option }}</option>
       </select>
     </div>
-  </label>
 </template>
+
 <script>
 export default {
   name: "SelectBase",
@@ -22,6 +20,7 @@ export default {
   }
 };
 </script>
+
 <style lang="sass" scoped>
 @import "../shared/sass/mixins"
 
@@ -50,11 +49,6 @@ export default {
   border: none
   background: inherit
   outline: none
-  font-family: Roboto, sans-serif
-  font-style: normal
-  font-weight: normal
-  font-size: 14px
-  line-height: 16px
-  letter-spacing: 0.28px
-  color: #35373B
+
+  +superscription(Roboto, normal, 14px, 16px, 0.28px, #35373B)
 </style>

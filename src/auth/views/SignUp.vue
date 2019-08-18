@@ -17,7 +17,7 @@
         </div>
         <input class="auth-form__input" type="text" placeholder="Username" />
         <input class="auth-form__input" type="email" placeholder="E-mail" />
-        <button class="auth-form__submit" type="submit">Sign up</button>
+        <button class="auth-form__submit" type="submit">Get started</button>
       </form>
     </main>
   </div>

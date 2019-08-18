@@ -6,7 +6,8 @@
     <main class="content">
       <form class="search-form">
         <section class="inputs-section">
-          <select-base-component id="location" :options="['Canada', 'Ukraine']">
+          <label class="input-label">Location</label>
+          <select-base-component :options="['Canada', 'Ukraine']">
             <svg
               class="location"
               width="8"
@@ -30,14 +31,11 @@
             placeholder="Type your query..."
           />
 
-          <select-base-component
-            id="category"
-            :options="['Category1', 'Category2']"
-          />
-          <select-base-component
-            id="service"
-            :options="['3 services', '4 services']"
-          />
+          <label class="input-label">Category</label>
+          <select-base-component :options="['Category1', 'Category2']" />
+
+          <label class="input-label">Service</label>
+          <select-base-component :options="['3 services', '4 services']" />
 
           <label class="input-label">Period</label>
           <date-range-picker
@@ -48,6 +46,7 @@
             :opens="opens"
             :autoApply="autoApply"
             :dateFormat="dateFormat"
+            :date-range="dateRange"
             v-model="dateRange"
           >
             <template v-slot:input="picker">
@@ -139,8 +138,12 @@
               </div>
             </template>
           </date-range-picker>
+
+          <button type="submit" class="search-form__submit">Search</button>
         </section>
       </form>
+
+      <router-view />
     </main>
   </div>
 </template>
@@ -170,10 +173,16 @@ export default {
   data() {
     return {
       opens: "right",
-      minDate: moment(Date.now()).add(1, "day").format(),
+      minDate: moment(Date.now())
+        .add(1, "day")
+        .format(),
       dateRange: {
-        startDate: moment(Date.now()).add(1, "day").format(),
-        endDate: moment(Date.now()).add(1, "day").format()
+        startDate: moment(Date.now())
+          .add(1, "day")
+          .format(),
+        endDate: moment(Date.now())
+          .add(1, "day")
+          .format()
       },
       show_ranges: false,
       autoApply: true
@@ -206,21 +215,19 @@ export default {
     margin: 22px
 
 .search-form
-  padding: 29px 45px
+  height: fit-content
+  padding: 0 45px
+  margin: 29px 0
+  border-right: 1px solid #E7EAF5
 
 .inputs-section
   display: flex
   flex-flow: column nowrap
 
 .input-label
-  font-family: Roboto, sans-serif
-  font-style: normal
-  font-weight: 500
-  font-size: 12px
-  line-height: 14px
-  letter-spacing: 1px
+  +superscription(Roboto, 500, 12px, 14px, 1px, #546087)
   text-transform: uppercase
-  color: #546087
+  margin-bottom: 5px
 
 .location
   margin: 0 4px
@@ -235,22 +242,35 @@ export default {
   margin-bottom: 20.37px
   background: #FCFCFC
   outline: none
-  font-family: Roboto, sans-serif
-  font-style: normal
-  font-weight: normal
-  font-size: 14px
-  line-height: 16px
-  letter-spacing: 0.28px
-  color: #35373B
+
+  +superscription(Roboto, normal, 14px, 16px, 0.28px, #35373B)
 
   &.date
     display: flex
+    align-items: center
 
     svg
       margin-right: 14px
+
+.search-form__submit
+  height: 43px
+  margin: 12px 0
+  background: #0AD69C
+  outline: none
+  border: none
+  border-radius: 2px
+
+  +superscription(Roboto, bold, 14px, 16px, 0.4px, #FFF)
+  text-transform: uppercase
 </style>
 
 <style lang="sass">
+@import "../../shared/sass/mixins"
+
+.superscription
+  +superscription(Roboto, 500, 12px, 14px, 0.28px, #01134E)
+  text-transform: uppercase
+
 .reportrange-text
   padding: 0 !important
   border: none !important
@@ -259,7 +279,7 @@ export default {
   display: flex
 
 .calendar-table .table-condensed
-  font-family: 'Roboto', sans-serif
+  font-family: Roboto, sans-serif
   letter-spacing: 1px
   color: #35373B
 </style>

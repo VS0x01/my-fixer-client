@@ -345,23 +345,14 @@ export default {
 
 .time
   margin: 13px 10px 0 auto
-  font-family: Roboto, sans-serif
-  font-style: normal
-  font-weight: normal
-  font-size: 12px
-  line-height: 14px
-  letter-spacing: 0.428571px
-  color: #9BA0AD
+
+  +superscription(Roboto, normal, 12px, 14px, 0.428571px, #9BA0AD)
 
 .dialog__person
   margin-bottom: 5px
-  font-family: 'Exo 2', sans-serif
-  font-style: normal
-  font-weight: 500
-  font-size: 16px
-  line-height: 19px
-  letter-spacing: 0.571429px
-  color: #01134E
+
+  +superscription('Exo 2', 500, 16px, 19px, 0.571429px, #01134E)
+
   +tablets
     display: flex
     flex-direction: column
@@ -374,12 +365,7 @@ export default {
         display: none
 
 .dialog__preview
-  font-family: Roboto, sans-serif
-  font-style: normal
-  font-weight: normal
-  font-size: 14px
-  line-height: 18px
-  color: #252F48
+  +superscription(Roboto, normal, 14px, 18px, normal, #252F48)
   mix-blend-mode: normal
   opacity: 0.43
 
@@ -416,26 +402,16 @@ export default {
   flex: 1 1 auto
   margin-right: 16px
   border: none
-  font-family: Roboto, sans-serif
-  font-style: normal
-  font-weight: normal
-  font-size: 14px
-  line-height: 18px
-  letter-spacing: 0.5px
-  color: #252F48
+
+  +superscription(Roboto, normal, 14px, 18px, 0.5px, #252F48)
   mix-blend-mode: normal
   opacity: 0.2
   outline: none
 
 .messages__date
   align-self: center
-  font-family: 'Exo 2', sans-serif
-  font-style: normal
-  font-weight: 500
-  font-size: 14px
-  line-height: 17px
-  letter-spacing: 0.5px
-  color: #CACED9
+
+  +superscription('Exo 2', 500, 14px, 17px, 0.5px, #CACED9)
 
 .message
   display: flex
@@ -452,12 +428,8 @@ export default {
   max-width: 70%
   background: #F7F9FC
   border-radius: 5px
-  font-family: Roboto, sans-serif
-  font-style: normal
-  font-weight: normal
-  font-size: 14px
-  line-height: 20px
-  color: #222428
+
+  +superscription(Roboto, normal, 14px, 20px, normal, #222428)
 
 .message-incoming
   align-self: flex-start

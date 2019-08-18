@@ -30,13 +30,8 @@ body
   .link
     text-decoration: none
     margin: 0 137px 0 0
-    font-family: Roboto, sans-serif
-    font-style: normal
-    font-weight: 300
-    font-size: 16px
-    line-height: 19px
-    letter-spacing: 0.28px
-    color: #222428
+
+    +superscription(Roboto, 300, 16px, 19px, 0.28px, #222428)
 
     a
       color: #2A74DB
@@ -57,13 +52,7 @@ body
       width: auto
 
   h1
-    font-family: 'Exo 2', sans-serif
-    font-style: normal
-    font-weight: 600
-    font-size: 28px
-    line-height: 34px
-    letter-spacing: 0.4px
-    color: #002396
+    +superscription('Exo 2', 600, 28px, 34px, 0.4px, #002396)
 
   .auth-form
     display: flex
@@ -85,22 +74,11 @@ body
     border: 2px solid #F2F2F2
     border-radius: 2px
     outline: none
-    font-family: Roboto, sans-serif
-    font-style: normal
-    font-weight: normal
-    font-size: 14px
-    line-height: 16px
-    letter-spacing: 0.28px
-    color: #222428
+
+    +superscription(Roboto, normal, 14px, 16px, 0.28px, #222428)
 
     &::placeholder
-      font-family: Roboto, sans-serif
-      font-style: normal
-      font-weight: normal
-      font-size: 14px
-      line-height: 16px
-      letter-spacing: 0.28px
-      color: rgba(135, 144, 167, 0.57)
+      +superscription(Roboto, normal, 14px, 16px, 0.28px, rgba(135, 144, 167, 0.57))
 
   .auth-form__input:focus
     background: #FFF
@@ -118,11 +96,6 @@ body
     background: #0AD69C
     border: none
     border-radius: 2px
-    font-family: 'Exo 2', sans-serif
-    font-style: normal
-    font-weight: 600
-    font-size: 16px
-    line-height: 19px
-    letter-spacing: 0.4px
-    color: #FFF
+
+    +superscription('Exo 2', 600, 16px, 19px, 0.4px, #FFF)
 </style>

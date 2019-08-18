@@ -20,19 +20,16 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import "../shared/sass/mixins"
+
 .breadcrumbs
   list-style: none
   font-size: 0
 
   li
     display: inline
-    font-family: Roboto, sans-serif
-    font-style: normal
-    font-weight: normal
-    font-size: 13px
-    line-height: 15px
-    letter-spacing: 0.685714px
-    color: #252F48
+
+    +superscription(Roboto, normal, 13px, 15px, 0.685714px, #252F48)
 
     &::after
       content: ">"

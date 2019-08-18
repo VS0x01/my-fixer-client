@@ -2,6 +2,7 @@
   <router-link
     :to="link"
     tag="div"
+    :exact="false"
     class="menu__item"
     :class="{ 'menu__item_with-notification': notifications }"
     active-class="menu__item_enabled"
@@ -47,6 +48,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import "../shared/sass/mixins"
+
 .menu__item
   position: relative
   height: 48px
@@ -71,13 +74,8 @@ export default {
     background-color: #2A74DB
     border-radius: 50%
     text-align: center
-    font-family: Roboto, sans-serif
-    font-style: normal
-    font-weight: bold
-    font-size: 12px
-    line-height: 20px
-    letter-spacing: 0.28px
-    color: #FFFFFF
+
+    +superscription(Roboto, bold, 12px, 20px, 0.28px, #FFF)
 
 .menu__item_enabled
   &::before
