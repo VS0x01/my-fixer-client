@@ -42,11 +42,102 @@
           <label class="input-label">Period</label>
           <date-range-picker
             ref="picker"
-            :locale-data="{ firstDay: 1, format: 'DD/MM/YYYY' }"
-            v-model="dateRange">
-            <div slot="input" slot-scope="picker" style="min-width: 350px;">
-              {{ picker.startDate }} - {{ picker.endDate }}
-            </div>
+            :locale-data="{ firstDay: 1, format: 'DD-MM-YYYY HH:mm:ss' }"
+            :min-date="minDate"
+            :ranges="show_ranges"
+            :opens="opens"
+            :autoApply="autoApply"
+            :dateFormat="dateFormat"
+            v-model="dateRange"
+          >
+            <template v-slot:input="picker">
+              <div class="input date">
+                <svg
+                  width="16"
+                  height="17"
+                  viewBox="0 0 16 17"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11.9833 3.42664C12.606 3.42664 13.1103 2.92569 13.1103 2.30302V1.12587C13.1103 0.502641 12.606 0 11.9833 0C11.3612 0 10.8586 0.502641 10.8586 1.12587V2.30302C10.8586 2.92569 11.3612 3.42664 11.9833 3.42664Z"
+                    fill="#546087"
+                    fill-opacity="0.3"
+                  />
+                  <path
+                    d="M15.9837 1.94817H13.7178V2.52125C13.7178 3.46568 12.9498 4.23598 12.0031 4.23598C11.0553 4.23598 10.2895 3.46568 10.2895 2.52125V1.94817H5.71557V2.52125C5.71557 3.46568 4.94752 4.23598 4.00085 4.23598C3.05417 4.23598 2.28724 3.46511 2.28724 2.52069V1.94817L1.27631e-09 1.91943V16.2334H1.14334H14.8589L16 16.2301L15.9837 1.94817ZM14.8589 15.0935H1.14334V5.94902H14.8589V15.0935Z"
+                    fill="#546087"
+                    fill-opacity="0.3"
+                  />
+                  <path
+                    d="M3.98278 3.42664C4.60544 3.42664 5.10865 2.92569 5.10865 2.30302V1.12587C5.10865 0.502641 4.60601 0 3.98278 0C3.36124 0 2.85803 0.502641 2.85803 1.12587V2.30302C2.85803 2.92569 3.36124 3.42664 3.98278 3.42664Z"
+                    fill="#546087"
+                    fill-opacity="0.3"
+                  />
+                  <path
+                    d="M7.51992 7.17651H5.71954V8.76615H7.51992V7.17651Z"
+                    fill="#546087"
+                    fill-opacity="0.3"
+                  />
+                  <path
+                    d="M4.70236 7.17651H2.90198V8.76615H4.70236V7.17651Z"
+                    fill="#546087"
+                    fill-opacity="0.3"
+                  />
+                  <path
+                    d="M10.4343 7.17651H8.63165V8.76615H10.4343V7.17651Z"
+                    fill="#546087"
+                    fill-opacity="0.3"
+                  />
+                  <path
+                    d="M13.1328 7.17651H11.3324V8.76615H13.1328V7.17651Z"
+                    fill="#546087"
+                    fill-opacity="0.3"
+                  />
+                  <path
+                    d="M7.51992 9.81641H5.71954V11.4049H7.51992V9.81641Z"
+                    fill="#546087"
+                    fill-opacity="0.3"
+                  />
+                  <path
+                    d="M10.4343 9.81641H8.63165V11.4049H10.4343V9.81641Z"
+                    fill="#546087"
+                    fill-opacity="0.3"
+                  />
+                  <path
+                    d="M13.1328 9.81641H11.3324V11.4049H13.1328V9.81641Z"
+                    fill="#546087"
+                    fill-opacity="0.3"
+                  />
+                  <path
+                    d="M7.51992 12.5085H5.71954V14.097H7.51992V12.5085Z"
+                    fill="#546087"
+                    fill-opacity="0.3"
+                  />
+                  <path
+                    d="M4.65729 9.81641H2.85803V11.4049H4.65729V9.81641Z"
+                    fill="#546087"
+                    fill-opacity="0.3"
+                  />
+                  <path
+                    d="M4.65729 12.5085H2.85803V14.097H4.65729V12.5085Z"
+                    fill="#546087"
+                    fill-opacity="0.3"
+                  />
+                  <path
+                    d="M10.4343 12.5085H8.63165V14.097H10.4343V12.5085Z"
+                    fill="#546087"
+                    fill-opacity="0.3"
+                  />
+                  <path
+                    d="M13.1328 12.5085H11.3324V14.097H13.1328V12.5085Z"
+                    fill="#546087"
+                    fill-opacity="0.3"
+                  />
+                </svg>
+                {{ picker.startDate | date }} - {{ picker.endDate | date }}
+              </div>
+            </template>
           </date-range-picker>
         </section>
       </form>
@@ -58,8 +149,8 @@
 import AppHeaderComponent from "@/components/AppHeader";
 import AppMenuComponent from "@/components/AppMenu";
 import SelectBaseComponent from "@/components/SelectBase";
+import moment from "moment";
 import DateRangePicker from "vue2-daterange-picker";
-import "vue2-daterange-picker/dist/vue2-daterange-picker.css";
 
 export default {
   name: "Search",
@@ -69,10 +160,33 @@ export default {
     SelectBaseComponent,
     DateRangePicker
   },
+
+  filters: {
+    date(value) {
+      return moment(value).format("DD/MM/YYYY");
+    }
+  },
+
   data() {
     return {
-      dateRange: {},
+      opens: "right",
+      minDate: moment(Date.now()).add(1, "day").format(),
+      dateRange: {
+        startDate: moment(Date.now()).add(1, "day").format(),
+        endDate: moment(Date.now()).add(1, "day").format()
+      },
+      show_ranges: false,
+      autoApply: true
     };
+  },
+  methods: {
+    dateFormat(classes, date) {
+      let today = moment();
+      if (classes.today) {
+        classes.disabled = !date.isSame(today, "day");
+      }
+      return classes;
+    }
   }
 };
 </script>
@@ -115,7 +229,7 @@ export default {
   box-sizing: border-box
   width: 250px
   height: 41px
-  padding: 10px 0 10px 4px
+  padding: 10px 0 10px 14px
   border: 2px solid #F2F2F2
   border-radius: 2px
   margin-bottom: 20.37px
@@ -129,7 +243,23 @@ export default {
   letter-spacing: 0.28px
   color: #35373B
 
-.date
-  border: none
-  outline: none
+  &.date
+    display: flex
+
+    svg
+      margin-right: 14px
+</style>
+
+<style lang="sass">
+.reportrange-text
+  padding: 0 !important
+  border: none !important
+
+.calendars
+  display: flex
+
+.calendar-table .table-condensed
+  font-family: 'Roboto', sans-serif
+  letter-spacing: 1px
+  color: #35373B
 </style>
