@@ -236,7 +236,7 @@ export default {
   box-sizing: border-box
   width: 250px
   height: 41px
-  padding: 10px 0 10px 14px
+  padding: 10px 14px
   border: 2px solid #F2F2F2
   border-radius: 2px
   margin-bottom: 20.37px
