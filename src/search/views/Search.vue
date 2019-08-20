@@ -262,6 +262,10 @@ export default {
 
   +superscription(Roboto, bold, 14px, 16px, 0.4px, #FFF)
   text-transform: uppercase
+
+#search-results, #search-map
+  display: flex
+  flex-flow: column nowrap
 </style>
 
 <style lang="sass">
