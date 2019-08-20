@@ -264,8 +264,10 @@ export default {
   text-transform: uppercase
 
 #search-results, #search-map
+  flex: 1 1 auto
   display: flex
   flex-flow: column nowrap
+
 </style>
 
 <style lang="sass">
