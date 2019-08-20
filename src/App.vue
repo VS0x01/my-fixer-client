@@ -96,6 +96,7 @@ body
     background: #0AD69C
     border: none
     border-radius: 2px
+    outline: none
 
     +superscription('Exo 2', 600, 16px, 19px, 0.4px, #FFF)
 </style>
