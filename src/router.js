@@ -8,35 +8,39 @@ import SearchResultsComponent from "@/search/views/SearchResults";
 import SearchMapComponent from "@/search/views/SearchMap";
 
 const routes = [
-  { path: "/", redirect: "/sign-in" },
+  {
+    path: "/",
+    name: "home", /** landing page **/
+    redirect: "/sign-in"
+  },
   { path: "/sign-in", component: SignIn },
   { path: "/sign-up", component: SignUp },
   {
     path: "/search",
+    name: "search",
     component: SearchComponent,
     children: [
       {
-        path: '',
-        redirect: {
-          name: 'searchResults'
-        },
+        path: "results",
+        name: "results",
+        alias: "",
+        component: SearchResultsComponent
       },
       {
-        path: 'results',
-        name: 'searchResults',
-        component: SearchResultsComponent,
-      },
-      {
-        path: 'map',
-        name: 'searchMap',
-        component: SearchMapComponent,
+        path: "map",
+        name: "map",
+        component: SearchMapComponent
       }
     ]
   },
-  { path: "/profile", component: ProfileComponent },
+  {
+    path: "/profile",
+    name: "profile",
+    component: ProfileComponent
+  },
   {
     path: "/network",
-    name: "messenger",
+    name: "network",
     component: MessengerComponent
   }
 ];

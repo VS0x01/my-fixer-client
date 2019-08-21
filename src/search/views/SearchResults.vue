@@ -1,11 +1,7 @@
 <template>
   <div id="search-results">
     <div class="search-results__top">
-      <router-link
-        :to="{ name: 'searchMap' }"
-        tag="span"
-        class="superscription"
-      >
+      <router-link :to="{ name: 'map' }" tag="span" class="superscription">
         Show map
       </router-link>
       <div class="search-results__sort">

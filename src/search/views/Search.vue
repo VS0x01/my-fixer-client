@@ -157,6 +157,15 @@ import DateRangePicker from "vue2-daterange-picker";
 
 export default {
   name: "Search",
+  beforeRouteEnter(to, from, next) {
+    if (to.path.match(/^\/search\/results(?:\/(?=$))?$/i)) next();
+    else next({ name: "results" });
+  },
+  beforeRouteUpdate(to, from, next) {
+    if (to.path.match(/^\/search\/\w+(?:\/(?=$))?$/i)) next();
+    else next({ name: "results" });
+  },
+
   components: {
     AppHeaderComponent,
     AppMenuComponent,
@@ -267,7 +276,6 @@ export default {
   flex: 1 1 auto
   display: flex
   flex-flow: column nowrap
-
 </style>
 
 <style lang="sass">

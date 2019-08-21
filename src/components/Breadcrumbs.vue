@@ -1,6 +1,8 @@
 <template>
   <ul class="breadcrumbs">
-    <li v-for="(breadcrumb, i) in breadcrumbs" :key="i">{{ breadcrumb | capitalize }}</li>
+    <li v-for="(breadcrumb, i) in breadcrumbs" :key="i">
+      <router-link :to="{ name: breadcrumb }">{{ breadcrumb | capitalize }}</router-link>
+    </li>
   </ul>
 </template>
 
@@ -8,12 +10,13 @@
 export default {
   name: "Breadcrumbs",
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     breadcrumbs() {
-      return ['Home'].concat(this.$route.path.split('/').filter((breadcrumb) => !!breadcrumb));
+      return ["home"].concat(
+        this.$route.path.split("/").filter(breadcrumb => !!breadcrumb)
+      );
     }
   }
 };
@@ -28,8 +31,11 @@ export default {
 
   li
     display: inline
-
     +superscription(Roboto, normal, 13px, 15px, 0.685714px, #252F48)
+
+    a
+      text-decoration: none
+      color: inherit
 
     &::after
       content: ">"

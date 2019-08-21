@@ -1,7 +1,7 @@
 <template>
   <div id="search-map">
     <router-link
-      :to="{ name: 'searchResults' }"
+      :to="{ name: 'results' }"
       tag="span"
       class="superscription"
     >

@@ -61,7 +61,7 @@
     </div>
     <nav class="items-container">
       <app-menu-item-component
-        link="/search"
+        :link="{ name: 'search' }"
         :notifications="0"
         width="18"
         height="18"
@@ -75,7 +75,7 @@
         />
       </app-menu-item-component>
       <app-menu-item-component
-        link="/profile"
+        :link="{ name: 'profile' }"
         :notifications="0"
         width="18"
         height="19"
@@ -91,7 +91,7 @@
         />
       </app-menu-item-component>
       <app-menu-item-component
-        :link="{ name: 'messenger' }"
+        :link="{ name: 'network' }"
         :notifications="0"
         width="20"
         height="17"
