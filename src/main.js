@@ -3,10 +3,19 @@ import VueRouter from "vue-router";
 import router from "@/router";
 import App from "./App.vue";
 import axios from "axios";
+import * as VueGoogleMaps from "vue2-google-maps";
 
 Vue.config.productionTip = false;
 
 Vue.prototype.$http = axios;
+
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "AIzaSyBZfLktBW9TtA8mthyr0W3v3gKTa_T_gbA",
+    libraries: "places"
+  },
+  installComponents: true
+});
 
 Vue.use(VueRouter);
 

@@ -7,7 +7,21 @@
     >
       Show results
     </router-link>
-    <img src="@/assets/map.png" alt="map" style="margin: 17px 41px;flex: 1 1 auto;" />
+    <GmapMap
+      :center="{ lat: 10, lng: 10 }"
+      :zoom="7"
+      map-type-id="terrain"
+      style="margin: 17px 41px; flex: 1 1 auto"
+    >
+      <GmapMarker
+        :key="index"
+        v-for="(m, index) in markers"
+        :position="m.position"
+        :clickable="true"
+        :draggable="true"
+        @click="center = m.position"
+      />
+    </GmapMap>
   </div>
 </template>
 
