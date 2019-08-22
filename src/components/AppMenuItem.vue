@@ -2,7 +2,6 @@
   <router-link
     :to="link"
     tag="div"
-    :exact="false"
     class="menu__item"
     :class="{ 'menu__item_with-notification': notifications }"
     active-class="menu__item_enabled"

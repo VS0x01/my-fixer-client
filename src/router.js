@@ -10,16 +10,22 @@ import SearchMapComponent from "@/search/views/SearchMap";
 const routes = [
   {
     path: "/",
-    name: "home", /** landing page **/
+    name: "home" /** landing page **/,
     redirect: "/sign-in"
   },
   { path: "/sign-in", component: SignIn },
   { path: "/sign-up", component: SignUp },
   {
     path: "/search",
-    name: "search",
     component: SearchComponent,
     children: [
+      {
+        path: "",
+        name: "search",
+        redirect: {
+          name: "results"
+        }
+      },
       {
         path: "results",
         name: "results",
@@ -27,7 +33,7 @@ const routes = [
         component: SearchResultsComponent
       },
       {
-        path: "map",
+        path: "results/map",
         name: "map",
         component: SearchMapComponent
       }
