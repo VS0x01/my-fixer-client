@@ -1,6 +1,5 @@
 <template>
   <aside class="menu">
-    <!-- <img class="logo" src="@/assets/logo.png" alt="logo" /> -->
     <div class="logo">
       <svg
         width="35"
