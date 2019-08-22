@@ -50,5 +50,9 @@ export default {
   background: inherit
   outline: none
 
+  &:-moz-focusring
+    color: transparent
+    text-shadow: 0 0 0 #000
+
   +superscription(Roboto, normal, 14px, 16px, 0.28px, #35373B)
 </style>

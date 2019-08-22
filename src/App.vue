@@ -23,6 +23,21 @@ body
   padding: 0
   background: #F9FAFC
 
+button,
+input[type="reset"],
+input[type="button"],
+input[type="submit"],
+input[type="file"] > input[type="button"]
+  &::-moz-focus-inner
+    border: 0
+
+a
+  outline: 0
+
+button
+  &:active
+    box-shadow: 0 1px 7px rgba(204, 202, 212, 0.58)
+
 #auth
   display: flex
   flex-direction: column
@@ -97,6 +112,7 @@ body
     border: none
     border-radius: 2px
     outline: none
+    cursor: pointer
 
     +superscription('Exo 2', 600, 16px, 19px, 0.4px, #FFF)
 </style>

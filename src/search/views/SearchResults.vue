@@ -72,7 +72,10 @@ export default {
 
 .search-results__top
   display: flex
-  svg
+
+  .search-results__sort
+    display: flex
+    align-items: center
     margin: 43px 23px 17px auto
 
 .superscription
@@ -80,15 +83,12 @@ export default {
   margin: 43px auto 17px 41px
   font-weight: 600
 
-.search-results__sort
-  display: flex
-
 #price, #rating
   appearance: none
   background: #FFF
   border: 1px solid #F0F1F3
   border-radius: 50%
-  box-shadow: 0 1px 7px rgba(204, 202, 212, 0.58)
+  margin: 0 10px 0 23px
   width: 18px
   height: 18px
 
@@ -99,8 +99,8 @@ export default {
     background: #0AD69C
     background-clip: content-box
     padding: 5px
+    box-shadow: 0 1px 7px rgba(204, 202, 212, 0.58)
 
 .sort-label
   +superscription(Roboto, 300, 14px, 28px, -0.046704px, #000)
-  margin: 0 20px 0 10px
 </style>
