@@ -54,16 +54,96 @@
         <input type="radio" id="price" name="sort" value="price" checked />
         <label for="price" class="sort-label">by price</label>
         <input type="radio" id="rating" name="sort" value="rating" />
-        <label for="rating" class="sort-label">by price</label>
+        <label for="rating" class="sort-label">by rating</label>
       </div>
     </div>
-    <!-- <section class=""></section> +scrollbar(#E0E6F0, ##F5F7FA, 8px) -->
+    <section class="found-people">
+      <person-card-component v-for="person in people" :key="person.id" :person="person">
+        <template v-slot:rating>
+          <svg
+            width="26"
+            height="26"
+            viewBox="0 0 26 26"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g filter="url(#filter0_d)">
+              <circle cx="13" cy="12" r="8" fill="white" />
+            </g>
+            <path
+              d="M18.6001 10.4683L14.8907 9.68539L13.0001 6.39966V15.5044L16.461 17.0514L16.0593 13.2817L18.6001 10.4683Z"
+              fill="#F9C800"
+            />
+            <path
+              d="M11.1094 9.68576L7.4 10.4686L9.94083 13.2821L9.5391 17.0517L13 15.5047V6.40002L11.1094 9.68576Z"
+              fill="#FFE060"
+            />
+            <defs>
+              <filter
+                id="filter0_d"
+                x="0"
+                y="0"
+                width="26"
+                height="26"
+                filterUnits="userSpaceOnUse"
+                color-interpolation-filters="sRGB"
+              >
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feColorMatrix
+                  in="SourceAlpha"
+                  type="matrix"
+                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                />
+                <feOffset dy="1" />
+                <feGaussianBlur stdDeviation="2.5" />
+                <feColorMatrix
+                  type="matrix"
+                  values="0 0 0 0 0.513291 0 0 0 0 0.541829 0 0 0 0 0.635371 0 0 0 0.24 0"
+                />
+                <feBlend
+                  mode="normal"
+                  in2="BackgroundImageFix"
+                  result="effect1_dropShadow"
+                />
+                <feBlend
+                  mode="normal"
+                  in="SourceGraphic"
+                  in2="effect1_dropShadow"
+                  result="shape"
+                />
+              </filter>
+            </defs>
+          </svg>
+        </template>
+      </person-card-component>
+    </section>
   </div>
 </template>
 
 <script>
+import PersonCardComponent from "@/search/components/PersonCard";
+
 export default {
-  name: "SearchResults"
+  name: "SearchResults",
+  components: { PersonCardComponent },
+  props: {
+    people: Array
+  },
+  data() {
+    return {
+      rating: {
+        gold: {
+          colors: ["#FFE060", "#F9C800"]
+        },
+        silver: {
+          colors: ["#D4D4D4", "#B8B6B6"]
+        },
+        bronze: {
+          colors: ["#FB9E48", "#D86F0F"]
+        }
+      }
+    };
+  }
 };
 </script>
 
@@ -76,7 +156,7 @@ export default {
   .search-results__sort
     display: flex
     align-items: center
-    margin: 43px 23px 17px auto
+    margin: 43px 108px 17px auto
 
 .superscription
   display: inline-block
@@ -103,4 +183,14 @@ export default {
 
 .sort-label
   +superscription(Roboto, 300, 14px, 28px, -0.046704px, #000)
+
+.found-people
+  display: grid
+  grid-template-columns: repeat(auto-fill, 350px)
+  justify-content: center
+  padding: 0 47px 0 32px
+  margin: 10px 60px 27px 0
+  overflow-y: scroll
+
+  +scrollbar(#E0E6F0, #F5F7FA, 8px)
 </style>

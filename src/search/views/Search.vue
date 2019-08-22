@@ -41,13 +41,13 @@
           <date-range-picker
             ref="picker"
             :locale-data="{ firstDay: 1, format: 'DD-MM-YYYY HH:mm:ss' }"
-            :min-date="minDate"
-            :ranges="show_ranges"
-            :opens="opens"
-            :autoApply="autoApply"
+            :min-date="dateRangePicker.minDate"
+            :ranges="dateRangePicker.show_ranges"
+            :opens="dateRangePicker.opens"
+            :autoApply="dateRangePicker.autoApply"
             :dateFormat="dateFormat"
-            :date-range="dateRange"
-            v-model="dateRange"
+            :date-range="dateRangePicker.dateRange"
+            v-model="dateRangePicker.dateRange"
           >
             <template v-slot:input="picker">
               <div class="input date">
@@ -143,7 +143,7 @@
         </section>
       </form>
 
-      <router-view />
+      <router-view :people="people" />
     </main>
   </div>
 </template>
@@ -172,20 +172,34 @@ export default {
 
   data() {
     return {
-      opens: "right",
-      minDate: moment(Date.now())
-        .add(1, "day")
-        .format(),
-      dateRange: {
-        startDate: moment(Date.now())
+      people: [
+        {
+          id: 1,
+          fullName: 'Richard Thompson',
+          rating: 'gold'
+        },
+        {
+          id: 2,
+          fullName: 'Miranda Hops',
+          rating: 'silver'
+        }
+      ],
+      dateRangePicker: {
+        opens: "right",
+        minDate: moment(Date.now())
           .add(1, "day")
           .format(),
-        endDate: moment(Date.now())
-          .add(1, "day")
-          .format()
-      },
-      show_ranges: false,
-      autoApply: true
+        dateRange: {
+          startDate: moment(Date.now())
+            .add(1, "day")
+            .format(),
+          endDate: moment(Date.now())
+            .add(1, "day")
+            .format()
+        },
+        show_ranges: false,
+        autoApply: true
+      }
     };
   },
   methods: {
