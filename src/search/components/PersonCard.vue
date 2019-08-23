@@ -33,6 +33,14 @@
           Python, Django, Sketch
         </span>
       </div>
+      <div class="person-info__entry">
+        <span class="person-info__key">
+          Base Daily Rate:
+        </span>
+        <span class="person-info__values">
+          $ 1,200 USD
+        </span>
+      </div>
     </section>
     <router-link :to="{ name: 'profile' }" class="more-person-info__link">
       More
@@ -74,7 +82,7 @@ export default {
   flex-flow: column nowrap
   flex: 1 1 auto
   max-width: 157px
-  padding: 18px 0 33px 0
+  padding: 10px 0 33px 0
 
   .person-info__main-entry
     display: flex
