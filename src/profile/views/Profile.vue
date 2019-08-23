@@ -16,6 +16,38 @@
           {{ informationTab }} information
         </span>
       </div>
+
+      <section v-show="viewInformationTab === 'personal'">
+        <form></form>
+      </section>
+      <section v-show="viewInformationTab === 'account'">
+        <form class="account-info-form">
+          <section class="input-wrapper">
+            <label for="username" class="input-label">Username</label>
+            <input
+              type="text"
+              id="username"
+              class="input"
+              placeholder="Username"
+            />
+          </section>
+          <section class="input-wrapper">
+            <label for="email" class="input-label">E-mail</label>
+            <input
+                type="email"
+                id="email"
+                class="input"
+                placeholder="example@example.com"
+            />
+          </section>
+        </form>
+        <router-link to="/" class="superscription">
+          Change password
+          <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.13514 0L4.85176e-08 1.08889L3.72973 4.66667L4.85176e-08 8.24444L1.13514 9.33333L6 4.66667L1.13514 0Z" fill="#2A74DB"/>
+          </svg>
+        </router-link>
+      </section>
     </main>
   </div>
 </template>
@@ -29,7 +61,7 @@ export default {
   components: { AppHeaderComponent, AppMenuComponent },
   data() {
     return {
-      informationTabs: ["personal", "accounts"],
+      informationTabs: ["personal", "account"],
       viewInformationTab: "personal"
     };
   }
@@ -38,6 +70,7 @@ export default {
 
 <style lang="sass" scoped>
 @import "../../shared/sass/mixins"
+@import "../../shared/sass/inputs"
 
 .content
   display: flex
@@ -64,4 +97,19 @@ export default {
     &.active
       color: #01134E
       border-color: #2A74DB
+
+.account-info-form
+  display: flex
+  justify-content: center
+  margin: 30px
+  .input-wrapper
+    display: flex
+    flex-flow: column nowrap
+    margin: 16px
+
+.superscription
+  display: block
+  text-decoration: none
+  text-align: center
+
 </style>

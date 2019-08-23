@@ -45,7 +45,6 @@ button
   .link
     text-decoration: none
     margin: 0 137px 0 0
-
     +superscription(Roboto, 300, 16px, 19px, 0.28px, #222428)
 
     a

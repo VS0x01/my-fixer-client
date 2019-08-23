@@ -224,6 +224,7 @@ export default {
 
 <style lang="sass" scoped>
 @import "../../shared/sass/mixins"
+@import "../../shared/sass/inputs"
 
 .content
   display: flex
@@ -246,25 +247,10 @@ export default {
   display: flex
   flex-flow: column nowrap
 
-.input-label
-  +superscription(Roboto, 500, 12px, 14px, 1px, #546087)
-  text-transform: uppercase
-  margin-bottom: 5px
-
 .location
   margin: 0 4px
 
 .input
-  box-sizing: border-box
-  width: 250px
-  height: 41px
-  padding: 10px 14px
-  border: 2px solid #F2F2F2
-  border-radius: 2px
-  margin-bottom: 20.37px
-  background: #FCFCFC
-  outline: none
-
   +superscription(Roboto, normal, 14px, 16px, 0.28px, #35373B)
 
   &.date
