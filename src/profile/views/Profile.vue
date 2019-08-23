@@ -18,7 +18,26 @@
       </div>
 
       <section v-show="viewInformationTab === 'personal'">
-        <form></form>
+        <form class="personal-info-form">
+          <section class="input-wrapper">
+            <label for="firstName" class="input-label">First name</label>
+            <input
+                type="text"
+                id="firstName"
+                class="input"
+                placeholder="First name"
+            />
+          </section>
+          <section class="input-wrapper">
+            <label for="lastName" class="input-label">Last name</label>
+            <input
+                type="text"
+                id="lastName"
+                class="input"
+                placeholder="First name"
+            />
+          </section>
+        </form>
       </section>
       <section v-show="viewInformationTab === 'account'">
         <form class="account-info-form">
@@ -34,17 +53,26 @@
           <section class="input-wrapper">
             <label for="email" class="input-label">E-mail</label>
             <input
-                type="email"
-                id="email"
-                class="input"
-                placeholder="example@example.com"
+              type="email"
+              id="email"
+              class="input"
+              placeholder="example@example.com"
             />
           </section>
         </form>
         <router-link to="/" class="superscription">
           Change password
-          <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.13514 0L4.85176e-08 1.08889L3.72973 4.66667L4.85176e-08 8.24444L1.13514 9.33333L6 4.66667L1.13514 0Z" fill="#2A74DB"/>
+          <svg
+            width="6"
+            height="10"
+            viewBox="0 0 6 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1.13514 0L4.85176e-08 1.08889L3.72973 4.66667L4.85176e-08 8.24444L1.13514 9.33333L6 4.66667L1.13514 0Z"
+              fill="#2A74DB"
+            />
           </svg>
         </router-link>
       </section>
@@ -98,6 +126,7 @@ export default {
       color: #01134E
       border-color: #2A74DB
 
+.personal-info-form,
 .account-info-form
   display: flex
   justify-content: center
@@ -111,5 +140,4 @@ export default {
   display: block
   text-decoration: none
   text-align: center
-
 </style>
