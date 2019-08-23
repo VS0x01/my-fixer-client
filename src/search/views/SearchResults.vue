@@ -59,7 +59,7 @@
     </div>
     <section class="found-people">
       <person-card-component v-for="person in people" :key="person.id" :person="person">
-        <template v-slot:rating>
+        <template v-slot:rating v-if="person.rating">
           <svg
             width="26"
             height="26"
@@ -72,11 +72,11 @@
             </g>
             <path
               d="M18.6001 10.4683L14.8907 9.68539L13.0001 6.39966V15.5044L16.461 17.0514L16.0593 13.2817L18.6001 10.4683Z"
-              fill="#F9C800"
+              :fill="rating[person.rating].colors[1]"
             />
             <path
               d="M11.1094 9.68576L7.4 10.4686L9.94083 13.2821L9.5391 17.0517L13 15.5047V6.40002L11.1094 9.68576Z"
-              fill="#FFE060"
+              :fill="rating[person.rating].colors[0]"
             />
             <defs>
               <filter
@@ -186,7 +186,7 @@ export default {
 
 .found-people
   display: grid
-  grid-template-columns: repeat(auto-fill, 350px)
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr))
   justify-content: center
   padding: 0 47px 0 32px
   margin: 10px 60px 27px 0

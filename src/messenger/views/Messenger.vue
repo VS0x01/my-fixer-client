@@ -10,7 +10,6 @@
             <img src="@/assets/miranda_hops.png" alt="person`s photo" />
           </div>
           <div class="dialog__person-strings">
-            <time class="time">9:32</time>
             <div class="dialog__attrs">
               <span class="dialog__person person_online muted">
                 Miranda Hops
@@ -35,6 +34,7 @@
             </div>
             <span class="dialog__preview">Excepteur sint occaecatar...</span>
           </div>
+          <time class="time">9:32</time>
         </div>
 
         <div class="dialog">
@@ -42,7 +42,6 @@
             <img src="@/assets/barry_callebaut.png" alt="person`s photo" />
           </div>
           <div class="dialog__person-strings">
-            <time class="time">22:01</time>
             <div class="dialog__attrs">
               <span class="dialog__person">
                 Barry Callebaut
@@ -50,6 +49,7 @@
             </div>
             <span class="dialog__preview">Nemo enim ipsam volupta...</span>
           </div>
+          <time class="time">22:01</time>
         </div>
 
         <div class="dialog dialog_chosen">
@@ -57,7 +57,6 @@
             <img src="@/assets/stacey_dosh_f.png" alt="person`s photo" />
           </div>
           <div class="dialog__person-strings">
-            <time class="time">19:15</time>
             <div class="dialog__attrs">
               <span class="dialog__person person_online">
                 Stacey Dosh
@@ -65,6 +64,7 @@
             </div>
             <span class="dialog__preview">Ut enim ad minima veniam...</span>
           </div>
+          <time class="time">19:15</time>
         </div>
 
         <div class="dialog">
@@ -72,7 +72,6 @@
             <img src="@/assets/michael_kors.png" alt="person`s photo" />
           </div>
           <div class="dialog__person-strings">
-            <time class="time">13:49</time>
             <div class="dialog__attrs">
               <span class="dialog__person">
                 Michael Kors
@@ -80,6 +79,7 @@
             </div>
             <span class="dialog__preview">To take a trivial example...</span>
           </div>
+          <time class="time">13:49</time>
         </div>
 
         <div class="dialog">
@@ -87,7 +87,6 @@
             <img src="@/assets/johny_cash.png" alt="person`s photo" />
           </div>
           <div class="dialog__person-strings">
-            <time class="time">10:29</time>
             <div class="dialog__attrs">
               <span class="dialog__person person_online">
                 Johny Cash
@@ -95,6 +94,7 @@
             </div>
             <span class="dialog__preview">Great explorer of the truth...</span>
           </div>
+          <time class="time">10:29</time>
         </div>
 
         <div class="dialog">
@@ -102,7 +102,6 @@
             <img src="@/assets/stacey_dosh_s.png" alt="person`s photo" />
           </div>
           <div class="dialog__person-strings">
-            <time class="time">08:53</time>
             <div class="dialog__attrs">
               <span class="dialog__person">
                 Stacey Dosh
@@ -110,6 +109,7 @@
             </div>
             <span class="dialog__preview">Ut enim ad minima veniam...</span>
           </div>
+          <time class="time">08:53</time>
         </div>
       </section>
 
@@ -256,8 +256,9 @@ export default {
 
 .dialogs
   display: grid
-  grid-auto-rows: 91px
+  align-content: start
   flex: 0 0 auto
+  overflow-x: hidden
   overflow-y: scroll
 
   +scrollbar(#F7F9FC, #EDF0F4, 1px)
@@ -326,31 +327,22 @@ export default {
   padding-bottom: 5px
 
   svg
+    margin-left: 8px
     +tablets
       display: none
 
 .dialog__person-strings
-  display: grid
-  flex-grow: 1
-  align-self: flex-start
-  +tablets
-    align-self: center
-    grid-template-rows: 1fr 0 0
-    .time,
-    .dialog__preview
-      display: none
-  +phones
-    .dialog__person
-      display: none
+  display: flex
+  flex-flow: column nowrap
+  overflow-x: hidden
 
 .time
+  align-self: flex-start
   margin: 13px 10px 0 auto
-
   +superscription(Roboto, normal, 12px, 14px, 0.428571px, #9BA0AD)
 
 .dialog__person
   margin-bottom: 5px
-
   +superscription('Exo 2', 500, 16px, 19px, 0.571429px, #01134E)
 
   +tablets
@@ -360,11 +352,15 @@ export default {
   &.person_online
     &::after
       display: inline-block
-      margin-bottom: 16px
+      margin-bottom: 10px
       +tablets
         display: none
 
 .dialog__preview
+  display: inline-block
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
   +superscription(Roboto, normal, 14px, 18px, normal, #252F48)
   mix-blend-mode: normal
   opacity: 0.43
@@ -377,14 +373,12 @@ export default {
   background: #FFFFFF
   box-shadow: 0 0 30px rgba(153, 163, 174, 0.06)
   border-radius: 4px
-
   +scrollbar(#DEE4F1, #F5F6F7, 1px)
 
 .messages-container
   overflow-y: scroll
   display: flex
   flex-direction: column
-
   +scrollbar(#DEE4F1, #F5F6F7, 8px)
 
 .messages__searchbar

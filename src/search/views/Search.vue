@@ -176,12 +176,20 @@ export default {
         {
           id: 1,
           fullName: 'Richard Thompson',
+          photo: 'https://vs0x01-myfixer.s3.eu-central-1.amazonaws.com/avatar_circle_blue_512dp.png',
           rating: 'gold'
         },
         {
           id: 2,
           fullName: 'Miranda Hops',
+          photo: 'https://vs0x01-myfixer.s3.eu-central-1.amazonaws.com/avatar_circle_blue_512dp.png',
           rating: 'silver'
+        },
+        {
+          id: 3,
+          fullName: 'First Last',
+          photo: 'https://vs0x01-myfixer.s3.eu-central-1.amazonaws.com/avatar_circle_blue_512dp.png',
+          rating: 'bronze'
         }
       ],
       dateRangePicker: {
