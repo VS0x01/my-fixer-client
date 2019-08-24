@@ -187,7 +187,6 @@ export default {
 .found-people
   display: grid
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr))
-  justify-content: center
   padding: 0 47px 0 32px
   margin: 10px 60px 27px 0
   overflow-y: scroll

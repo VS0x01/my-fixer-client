@@ -62,6 +62,7 @@ export default {
 
 .person-card
   display: flex
+  justify-self: center
   width: 330px
   height: 128px
   background: #FFFFFF
