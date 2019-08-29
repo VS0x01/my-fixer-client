@@ -15,8 +15,15 @@ const routes = [
   { path: "/sign-in", component: SignIn },
   { path: "/sign-up", component: SignUp },
   {
-    path: "/search/results",
+    path: "/search",
     name: "search",
+    redirect: {
+      name: "results"
+    }
+  },
+  {
+    path: "/search/results",
+    name: "results",
     component: SearchComponent
   },
   {
