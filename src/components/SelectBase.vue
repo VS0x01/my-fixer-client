@@ -1,10 +1,16 @@
 <template>
-    <div class="select">
-      <slot />
-      <select class="input">
-        <option v-for="(option, i) in options" :key="i">{{ option }}</option>
-      </select>
-    </div>
+  <div class="select">
+    <slot />
+    <select class="input">
+      <option
+        v-for="(option, i) in options"
+        :key="i"
+        :value="option.value || option.name"
+      >
+        {{ option.name }}
+      </option>
+    </select>
+  </div>
 </template>
 
 <script>

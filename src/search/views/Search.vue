@@ -7,7 +7,7 @@
       <form class="search-form">
         <section class="inputs-section">
           <label class="input-label">Location</label>
-          <select-base-component :options="['Canada', 'Ukraine']">
+          <select-base-component :options="[]">
             <svg
               class="location"
               width="8"
@@ -32,10 +32,10 @@
           />
 
           <label class="input-label">Category</label>
-          <select-base-component :options="['Category1', 'Category2']" />
+          <select-base-component :options="[]" />
 
           <label class="input-label">Service</label>
-          <select-base-component :options="['3 services', '4 services']" />
+          <select-base-component :options="[]" />
 
           <label class="input-label">Period</label>
           <date-range-picker
