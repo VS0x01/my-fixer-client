@@ -1,7 +1,9 @@
 <template>
   <ul class="breadcrumbs">
     <li v-for="(breadcrumb, i) in breadcrumbs" :key="i">
-      <router-link :to="{ name: breadcrumb }">{{ breadcrumb | capitalize }}</router-link>
+      <router-link :to="{ name: breadcrumb }">
+        {{ breadcrumb | clear | capitalize }}
+      </router-link>
     </li>
   </ul>
 </template>
@@ -17,6 +19,11 @@ export default {
       return ["home"].concat(
         this.$route.path.split("/").filter(breadcrumb => !!breadcrumb)
       );
+    }
+  },
+  filters: {
+    clear: function(value) {
+      return value.split(/([^A-Z])/i).filter(e => e.match(/([A-Z])/i)).join(' ');
     }
   }
 };

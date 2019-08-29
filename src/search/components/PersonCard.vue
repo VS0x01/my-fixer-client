@@ -42,7 +42,7 @@
         </span>
       </div>
     </section>
-    <router-link :to="{ name: 'profile' }" class="more-person-info__link">
+    <router-link :to="{ name: 'my-profile' }" class="more-person-info__link">
       More
     </router-link>
   </div>

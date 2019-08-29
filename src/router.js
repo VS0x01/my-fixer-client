@@ -6,6 +6,7 @@ import ProfileComponent from "@/profile/views/Profile";
 import SearchComponent from "@/search/views/Search";
 import SearchResultsComponent from "@/search/views/SearchResults";
 import SearchMapComponent from "@/search/views/SearchMap";
+import AdminComponent from "@/admin/views/Admin";
 
 const routes = [
   {
@@ -40,14 +41,19 @@ const routes = [
     ]
   },
   {
-    path: "/profile",
-    name: "profile",
+    path: "/my-profile",
+    name: "my-profile",
     component: ProfileComponent
   },
   {
     path: "/network",
     name: "network",
     component: MessengerComponent
+  },
+  {
+    path: "/manage-users",
+    name: "manage-users",
+    component: AdminComponent
   }
 ];
 
