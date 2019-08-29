@@ -1,29 +1,20 @@
 <template>
-  <div id="search-map">
-    <router-link
-      :to="{ name: 'results' }"
-      tag="span"
-      class="superscription"
-    >
-      Show results
-    </router-link>
-    <GmapMap
-      :center="{ lat: 50.4021698, lng: 30.3922654 }"
-      :zoom="7"
-      map-type-id="terrain"
-      style="margin: 17px 41px; flex: 1 1 auto; border: 2px solid #EFEFEF;"
-      :options="{ styles: mapStyles }"
-    >
-      <GmapMarker
-        :key="index"
-        v-for="(m, index) in markers"
-        :position="m.position"
-        :clickable="true"
-        :draggable="true"
-        @click="center = m.position"
-      />
-    </GmapMap>
-  </div>
+  <GmapMap
+    :center="{ lat: 50.4021698, lng: 30.3922654 }"
+    :zoom="7"
+    map-type-id="terrain"
+    style="margin: 17px 41px; flex: 1 1 auto; border: 2px solid #EFEFEF;"
+    :options="{ styles: mapStyles }"
+  >
+    <GmapMarker
+      :key="index"
+      v-for="(m, index) in markers"
+      :position="m.position"
+      :clickable="true"
+      :draggable="true"
+      @click="center = m.position"
+    />
+  </GmapMap>
 </template>
 
 <script>
@@ -207,8 +198,5 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.superscription
-  display: inline-block
-  margin: 43px auto 0 41px
-  font-weight: 600
+
 </style>

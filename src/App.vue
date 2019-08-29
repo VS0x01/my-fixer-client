@@ -17,6 +17,7 @@ export default {
 
 <style lang="sass">
 @import "./shared/sass/mixins"
+@import "./shared/sass/date-range-picker"
 
 body
   margin: 0

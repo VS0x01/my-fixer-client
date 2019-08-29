@@ -11,19 +11,24 @@
 <script>
 export default {
   name: "Breadcrumbs",
+  filters: {
+    clear: function(value) {
+      return value
+        .split(/([^A-Z])/i)
+        .filter(e => e.match(/([A-Z])/i))
+        .join(" ");
+    }
+  },
+
   data() {
     return {};
   },
+
   computed: {
     breadcrumbs() {
       return ["home"].concat(
         this.$route.path.split("/").filter(breadcrumb => !!breadcrumb)
       );
-    }
-  },
-  filters: {
-    clear: function(value) {
-      return value.split(/([^A-Z])/i).filter(e => e.match(/([A-Z])/i)).join(' ');
     }
   }
 };

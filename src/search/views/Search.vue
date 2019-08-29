@@ -143,7 +143,70 @@
         </section>
       </form>
 
-      <router-view :people="people" />
+      <div id="search-results">
+        <div class="search-results__top">
+          <span class="superscription" @click="showResults = ++showResults % 2">
+            Show {{ showResults === 0 ? "map" : "results" }}
+          </span>
+          <div class="search-results__sort">
+            <svg
+              width="13"
+              height="12"
+              viewBox="0 0 13 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <line
+                x1="1"
+                y1="6.07874"
+                x2="1"
+                y2="10.8502"
+                stroke="#01134E"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <line
+                x1="4.64284"
+                y1="4.38574"
+                x2="4.64284"
+                y2="10.8501"
+                stroke="#01134E"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="8.28575"
+                y1="2.69287"
+                x2="8.28575"
+                y2="10.8501"
+                stroke="#01134E"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="11.9286"
+                y1="1"
+                x2="11.9286"
+                y2="10.8501"
+                stroke="#01134E"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <input type="radio" id="price" name="sort" value="price" checked />
+            <label for="price" class="sort-label">by price</label>
+            <input type="radio" id="rating" name="sort" value="rating" />
+            <label for="rating" class="sort-label">by rating</label>
+          </div>
+        </div>
+        <search-results-component
+          v-show="showResults === 0"
+          :people="people"
+        />
+        <search-map-component v-show="showResults === 1" />
+      </div>
     </main>
   </div>
 </template>
@@ -154,6 +217,8 @@ import AppMenuComponent from "@/components/AppMenu";
 import SelectBaseComponent from "@/components/SelectBase";
 import moment from "moment";
 import DateRangePicker from "vue2-daterange-picker";
+import SearchResultsComponent from "@/search/views/SearchResults";
+import SearchMapComponent from "@/search/views/SearchMap";
 
 export default {
   name: "Search",
@@ -161,7 +226,9 @@ export default {
     AppHeaderComponent,
     AppMenuComponent,
     SelectBaseComponent,
-    DateRangePicker
+    DateRangePicker,
+    SearchResultsComponent,
+    SearchMapComponent
   },
 
   filters: {
@@ -172,24 +239,29 @@ export default {
 
   data() {
     return {
+      results: ["results", "map"],
+      showResults: 0,
       people: [
         {
           id: 1,
-          fullName: 'Richard Thompson',
-          photo: 'https://vs0x01-myfixer.s3.eu-central-1.amazonaws.com/avatar_circle_blue_512dp.png',
-          rating: 'gold'
+          fullName: "Richard Thompson",
+          photo:
+            "https://vs0x01-myfixer.s3.eu-central-1.amazonaws.com/avatar_circle_blue_512dp.png",
+          rating: "gold"
         },
         {
           id: 2,
-          fullName: 'Miranda Hops',
-          photo: 'https://vs0x01-myfixer.s3.eu-central-1.amazonaws.com/avatar_circle_blue_512dp.png',
-          rating: 'silver'
+          fullName: "Miranda Hops",
+          photo:
+            "https://vs0x01-myfixer.s3.eu-central-1.amazonaws.com/avatar_circle_blue_512dp.png",
+          rating: "silver"
         },
         {
           id: 3,
-          fullName: 'First Last',
-          photo: 'https://vs0x01-myfixer.s3.eu-central-1.amazonaws.com/avatar_circle_blue_512dp.png',
-          rating: 'bronze'
+          fullName: "First Last",
+          photo:
+            "https://vs0x01-myfixer.s3.eu-central-1.amazonaws.com/avatar_circle_blue_512dp.png",
+          rating: "bronze"
         }
       ],
       dateRangePicker: {
@@ -271,28 +343,42 @@ export default {
   +superscription(Roboto, bold, 14px, 16px, 0.4px, #FFF)
   text-transform: uppercase
 
-#search-results, #search-map
+#search-results
   flex: 1 1 auto
   display: flex
   flex-flow: column nowrap
-</style>
 
-<style lang="sass">
-@import "../../shared/sass/mixins"
-
-.superscription
-  +superscription(Roboto, 500, 12px, 14px, 0.28px, #01134E)
-  text-transform: uppercase
-
-.reportrange-text
-  padding: 0 !important
-  border: none !important
-
-.calendars
+.search-results__top
   display: flex
 
-.calendar-table .table-condensed
-  font-family: Roboto, sans-serif
-  letter-spacing: 1px
-  color: #35373B
+  .search-results__sort
+    display: flex
+    align-items: center
+    margin: 43px 108px 17px auto
+
+.superscription
+  display: inline-block
+  margin: 43px auto 17px 41px
+  font-weight: 600
+
+#price, #rating
+  appearance: none
+  background: #FFF
+  border: 1px solid #F0F1F3
+  border-radius: 50%
+  margin: 0 10px 0 23px
+  width: 18px
+  height: 18px
+
+  &:focus
+    outline: none
+
+  &:checked
+    background: #0AD69C
+    background-clip: content-box
+    padding: 5px
+    box-shadow: 0 1px 7px rgba(204, 202, 212, 0.58)
+
+.sort-label
+  +superscription(Roboto, 300, 14px, 28px, -0.046704px, #000)
 </style>

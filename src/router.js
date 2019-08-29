@@ -4,8 +4,6 @@ import SignUp from "@/auth/views/SignUp";
 import MessengerComponent from "@/messenger/views/Messenger";
 import ProfileComponent from "@/profile/views/Profile";
 import SearchComponent from "@/search/views/Search";
-import SearchResultsComponent from "@/search/views/SearchResults";
-import SearchMapComponent from "@/search/views/SearchMap";
 import AdminComponent from "@/admin/views/Admin";
 
 const routes = [
@@ -17,28 +15,9 @@ const routes = [
   { path: "/sign-in", component: SignIn },
   { path: "/sign-up", component: SignUp },
   {
-    path: "/search",
-    component: SearchComponent,
-    children: [
-      {
-        path: "",
-        name: "search",
-        redirect: {
-          name: "results"
-        }
-      },
-      {
-        path: "results",
-        name: "results",
-        alias: "",
-        component: SearchResultsComponent
-      },
-      {
-        path: "results/map",
-        name: "map",
-        component: SearchMapComponent
-      }
-    ]
+    path: "/search/results",
+    name: "search",
+    component: SearchComponent
   },
   {
     path: "/my-profile",
