@@ -143,12 +143,12 @@
         </section>
       </form>
 
-      <div id="search-results">
+      <div class="search-results">
         <div class="search-results__top">
           <span class="superscription" @click="showResults = ++showResults % 2">
             Show {{ showResults === 0 ? "map" : "results" }}
           </span>
-          <div class="search-results__sort">
+          <div class="search-results__sort" v-show="showResults === 0">
             <svg
               width="13"
               height="12"
@@ -201,10 +201,7 @@
             <label for="rating" class="sort-label">by rating</label>
           </div>
         </div>
-        <search-results-component
-          v-show="showResults === 0"
-          :people="people"
-        />
+        <search-results-component v-show="showResults === 0" :people="people" />
         <search-map-component v-show="showResults === 1" />
       </div>
     </main>
@@ -343,23 +340,23 @@ export default {
   +superscription(Roboto, bold, 14px, 16px, 0.4px, #FFF)
   text-transform: uppercase
 
-#search-results
+.search-results
   flex: 1 1 auto
   display: flex
   flex-flow: column nowrap
 
-.search-results__top
-  display: flex
-
-  .search-results__sort
+  .search-results__top
     display: flex
-    align-items: center
-    margin: 43px 108px 17px auto
 
-.superscription
-  display: inline-block
-  margin: 43px auto 17px 41px
-  font-weight: 600
+    .superscription
+      display: inline-block
+      margin: 43px auto 17px 41px
+      font-weight: 600
+
+    .search-results__sort
+      display: flex
+      align-items: center
+      margin: 43px 108px 17px auto
 
 #price, #rating
   appearance: none
