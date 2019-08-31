@@ -14,3 +14,20 @@
   background: #FCFCFC
   outline: none
   +superscription(Roboto, normal, 14px, 16px, 0.28px, #35373B)
+
+.searchbar
+  display: flex
+  align-items: center
+
+  &::before
+    content: url("data:image/svg+xml,%3Csvg width='15' height='16' viewBox='0 0 15 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M10.6172 10.499L14.0684 14.1387C14.3604 14.4463 14.3506 14.9375 14.0474 15.2334C13.9045 15.373 13.7163 15.4492 13.5181 15.4492C13.3086 15.4492 13.113 15.3652 12.9678 15.2119L9.49023 11.5449C8.50293 12.248 7.3479 12.6191 6.13599 12.6191C2.90771 12.6191 0.28125 9.95605 0.28125 6.68262C0.28125 3.40918 2.90771 0.746094 6.13599 0.746094C9.36426 0.746094 11.9907 3.40918 11.9907 6.68262C11.9907 8.08301 11.5044 9.42969 10.6172 10.499ZM10.4634 6.68262C10.4634 4.26367 8.52222 2.29492 6.13599 2.29492C3.74976 2.29492 1.80859 4.26367 1.80859 6.68262C1.80859 9.10254 3.74976 11.0703 6.13599 11.0703C8.52222 11.0703 10.4634 9.10254 10.4634 6.68262Z' fill='%23BBC3CF'/%3E%3C/svg%3E")
+    padding: 2px 18px 0 18px
+
+.text-input
+  +superscription(Roboto, normal, 14px, 18px, 0.5px, #252F48)
+  border: none
+  outline: none
+
+  &::placeholder
+    mix-blend-mode: normal
+    opacity: 0.2
