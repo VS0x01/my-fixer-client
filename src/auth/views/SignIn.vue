@@ -35,26 +35,31 @@ export default {
   data() {
     return {
       email: "",
-      password: "",
-      tokens: {},
-      error: ""
+      password: ""
     };
   },
   methods: {
     login() {
       this.$http
-        .post("https://my-fixer-api.herokuapp.com/accounts/sign-in", {
+        .post("/accounts/sign-in", {
           email: this.email,
           password: this.password
         })
         .then(
           response => {
-            this.error = "";
-            this.tokens.access = response.data.accessToken;
-            this.tokens.refresh = response.data.refreshToken;
+            if (response.hasOwnProperty("errors")) {
+              for (let err in response.errors)
+                this.$store.commit("addError", {
+                  error: err
+                });
+            }
+            localStorage.setItem("accessToken", response.data.accessToken);
+            localStorage.setItem("refreshToken", response.data.refreshToken);
           },
           error => {
-            this.error = error.toString();
+            this.$store.commit("addError", {
+              error
+            });
           }
         );
     }
@@ -62,6 +67,4 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
-
-</style>
+<style lang="sass" scoped></style>

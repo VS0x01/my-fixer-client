@@ -1,13 +1,15 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import router from "@/router";
+import store from "@/store";
 import App from "./App.vue";
-import axios from "axios";
+import ApiServices from "@/shared/services/api.services";
 import * as VueGoogleMaps from "vue2-google-maps";
 
 Vue.config.productionTip = false;
 
-Vue.prototype.$http = axios;
+ApiServices.init('https://my-fixer-api.herokuapp.com');
+Vue.prototype.$http = ApiServices;
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -27,5 +29,6 @@ Vue.filter("capitalize", function(value) {
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount("#app");
