@@ -280,6 +280,8 @@ export default {
         }
       ],
       map: {
+        lat: 50.4021698,
+        lng: 30.3922654,
         markers: [],
         place: null
       },
@@ -305,10 +307,12 @@ export default {
     setPlace(place) {
       this.map.place = place;
       if (this.map.place) {
+        this.map.lat = this.map.place.geometry.location.lat();
+        this.map.lng = this.map.place.geometry.location.lng();
         this.map.markers.push({
           position: {
-            lat: this.map.place.geometry.location.lat(),
-            lng: this.map.place.geometry.location.lng()
+            lat: this.map.lat,
+            lng: this.map.lng
           }
         });
         this.map.place = null;

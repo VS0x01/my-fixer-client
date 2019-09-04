@@ -1,7 +1,10 @@
 <template>
   <GmapMap
-    :center="{ lat: 50.4021698, lng: 30.3922654 }"
-    :zoom="7"
+    :center="{
+      lat: map.lat,
+      lng: map.lng
+    }"
+    :zoom="zoom"
     map-type-id="terrain"
     style="margin: 17px 41px; flex: 1 1 auto; border: 2px solid #EFEFEF;"
     :options="{ styles: mapStyles }"
@@ -11,7 +14,7 @@
       :key="index"
       :position="m.position"
       :clickable="true"
-      @click="center = m.position"
+      @click="showPlace"
     />
   </GmapMap>
 </template>
@@ -24,6 +27,7 @@ export default {
   },
   data() {
     return {
+      zoom: 7,
       mapStyles: [
         {
           featureType: "all",
@@ -195,6 +199,11 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    showPlace() {
+      this.zoom++;
+    }
   }
 };
 </script>
