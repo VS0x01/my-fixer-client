@@ -11,7 +11,7 @@ Vue.prototype.$http = axios;
 
 Vue.use(VueGoogleMaps, {
   load: {
-    key: "AIzaSyBZfLktBW9TtA8mthyr0W3v3gKTa_T_gbA",
+    key: "AIzaSyBGWuncMklXxCHQV3Ug5jgnCHZAsFl0SHk",
     libraries: "places"
   },
   installComponents: true

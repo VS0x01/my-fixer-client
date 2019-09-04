@@ -31,6 +31,9 @@ export default {
 @import "../shared/sass/mixins"
 
 .select
+  display: flex
+  align-items: center
+  justify-content: space-around
   box-sizing: border-box
   width: 250px
   border: 2px solid #F2F2F2
