@@ -32,6 +32,7 @@ export default {
     width: 22px
     height: 23px
     border-radius: 50%
+    object-fit: cover
 
   .header__person-name
     +superscription(Roboto, normal, 14px, 16px, 0.28px, #252F48)

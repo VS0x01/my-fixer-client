@@ -170,11 +170,7 @@
         </div>
 
         <form class="messages__send">
-          <input
-            class="text-input"
-            type="text"
-            placeholder="Write a message"
-          />
+          <input class="text-input" type="text" placeholder="Write a message" />
           <div class="messages__actions">
             <button class="messages__action">
               <svg
@@ -307,7 +303,7 @@ export default {
   img
     +fixdims(inherit, inherit)
     border-radius: 50%
-    overflow: hidden
+    object-fit: cover
 
   &.person_online
     &::after
@@ -432,6 +428,8 @@ export default {
   .dialog__photo
     +fixdims(36px, 36.62px)
     margin-right: 11px
+    border-radius: 50%
+    object-fit: cover
 
 .message-sent
   align-self: flex-end

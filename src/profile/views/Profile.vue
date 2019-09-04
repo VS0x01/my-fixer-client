@@ -206,11 +206,15 @@ export default {
 .personal-info
   display: flex
   justify-content: center
+
   .photo-wrapper
     margin: 50px 0 0 60px
     text-align: center
+
     .personal-info__photo
       +fixdims(134px, 136.24px)
+      border-radius: 50%
+      object-fit: cover
 
     .personal-info__photo-update
       +superscription(Roboto, normal, 12px, 14px, 0.28px, #35373B)

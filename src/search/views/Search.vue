@@ -23,12 +23,30 @@
             </svg>
           </select-base-component>
 
-          <label for="query" class="input-label">Search</label>
+          <label v-show="showResults === 0" for="query" class="input-label">
+            Search
+          </label>
           <input
+            v-show="showResults === 0"
             type="search"
             id="query"
             class="input"
             placeholder="Type your query..."
+          />
+          <label
+            v-show="showResults === 1"
+            for="query_place"
+            class="input-label"
+          >
+            Search
+          </label>
+          <gmap-autocomplete
+            v-show="showResults === 1"
+            type="search"
+            id="query_place"
+            class="input"
+            placeholder="Type your query..."
+            @place_changed="setPlace"
           />
 
           <label class="input-label">Category</label>
@@ -202,7 +220,7 @@
           </div>
         </div>
         <search-results-component v-show="showResults === 0" :people="people" />
-        <search-map-component v-show="showResults === 1" />
+        <search-map-component v-show="showResults === 1" :map="map" />
       </div>
     </main>
   </div>
@@ -261,6 +279,10 @@ export default {
           rating: "bronze"
         }
       ],
+      map: {
+        markers: [],
+        place: null
+      },
       dateRangePicker: {
         opens: "right",
         minDate: moment(Date.now())
@@ -280,6 +302,18 @@ export default {
     };
   },
   methods: {
+    setPlace(place) {
+      this.map.place = place;
+      if (this.map.place) {
+        this.map.markers.push({
+          position: {
+            lat: this.map.place.geometry.location.lat(),
+            lng: this.map.place.geometry.location.lng()
+          }
+        });
+        this.map.place = null;
+      }
+    },
     dateFormat(classes, date) {
       let today = moment();
       if (classes.today) {

@@ -75,7 +75,7 @@ export default {
 .person-card__photo
   +fixdims(76px, 76px)
   border-radius: 50%
-  overflow: hidden
+  object-fit: cover
   margin: 18px 12px 34px 18px
 
 .person-info

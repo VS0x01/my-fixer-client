@@ -7,11 +7,10 @@
     :options="{ styles: mapStyles }"
   >
     <GmapMarker
+      v-for="(m, index) in map.markers"
       :key="index"
-      v-for="(m, index) in markers"
       :position="m.position"
       :clickable="true"
-      :draggable="true"
       @click="center = m.position"
     />
   </GmapMap>
@@ -20,6 +19,9 @@
 <script>
 export default {
   name: "SearchMap",
+  props: {
+    map: Object
+  },
   data() {
     return {
       mapStyles: [
@@ -197,6 +199,4 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
-
-</style>
+<style lang="sass" scoped></style>
