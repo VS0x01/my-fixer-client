@@ -167,10 +167,22 @@
               <time class="time">01:38</time>
             </p>
           </div>
+
+          <div class="message message-sent" v-for="msg of messages" :key="msg">
+            <p class="message__data">
+              {{ msg }}
+              <time class="time">01:38</time>
+            </p>
+          </div>
         </div>
 
         <form class="messages__send">
-          <input class="text-input" type="text" placeholder="Write a message" />
+          <input
+            v-model="message"
+            class="text-input"
+            type="text"
+            placeholder="Write a message"
+          />
           <div class="messages__actions">
             <button class="messages__action">
               <svg
@@ -203,7 +215,7 @@
               </svg>
             </button>
             <button
-              type="submit"
+              @click="sendMessage"
               class="messages__action messages__action-send"
             >
               <svg
@@ -233,10 +245,33 @@
 <script>
 import AppHeaderComponent from "@/components/AppHeader";
 import AppMenuComponent from "@/components/AppMenu";
+const io = require("socket.io-client");
 
 export default {
   name: "Messenger",
-  components: { AppHeaderComponent, AppMenuComponent }
+  components: { AppHeaderComponent, AppMenuComponent },
+  data() {
+    return {
+      socket: null,
+      message: "",
+      messages: []
+    };
+  },
+
+  mounted() {
+    let socket = io("https://mighty-lion-13.localtunnel.me");
+    this.socket = socket;
+    socket.on("message", this.onMessage);
+  },
+
+  methods: {
+    onMessage(msg) {
+      this.messages.push(msg);
+    },
+    sendMessage() {
+      this.socket.emit("message", this.message);
+    }
+  }
 };
 </script>
 

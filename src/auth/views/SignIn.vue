@@ -48,20 +48,25 @@ export default {
         .then(
           response => {
             if (response.hasOwnProperty("errors")) {
-              for (let err in response.errors)
-                this.$store.commit("addError", {
-                  error: err
-                });
+              response.errors.forEach(err => {
+                this.commitError(err);
+              });
+            } else if (response.hasOwnProperty("error")) {
+              this.commitError(response.error);
+            } else {
+              localStorage.setItem("accessToken", response.data.accessToken);
+              localStorage.setItem("refreshToken", response.data.refreshToken);
             }
-            localStorage.setItem("accessToken", response.data.accessToken);
-            localStorage.setItem("refreshToken", response.data.refreshToken);
           },
-          error => {
-            this.$store.commit("addError", {
-              error
-            });
+          err => {
+            this.commitError(err);
           }
         );
+    },
+    commitError(error) {
+      this.$store.commit("addError", {
+        error
+      });
     }
   }
 };
