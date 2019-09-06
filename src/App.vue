@@ -6,12 +6,7 @@
 
 <script>
 export default {
-  name: "app",
-  data() {
-    return {
-      authorized: false
-    };
-  }
+  name: "app"
 };
 </script>
 

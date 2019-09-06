@@ -163,10 +163,10 @@
 
       <div class="search-results">
         <div class="search-results__top">
-          <span class="superscription" @click="showResults = ++showResults % 2">
-            Show {{ showResults === 0 ? "map" : "results" }}
+          <span class="superscription" @click="showResults = !showResults">
+            Show {{ showResults ? "map" : "results" }}
           </span>
-          <div class="search-results__sort" v-show="showResults === 0">
+          <div class="search-results__sort" v-show="!showResults">
             <svg
               width="13"
               height="12"
@@ -219,8 +219,8 @@
             <label for="rating" class="sort-label">by rating</label>
           </div>
         </div>
-        <search-results-component v-show="showResults === 0" :people="people" />
-        <search-map-component v-show="showResults === 1" :map="map" />
+        <search-results-component v-show="!showResults" :people="people" />
+        <search-map-component v-show="showResults" :map="map" />
       </div>
     </main>
   </div>
@@ -255,7 +255,7 @@ export default {
   data() {
     return {
       results: ["results", "map"],
-      showResults: 0,
+      showResults: false,
       people: [
         {
           id: 1,

@@ -50,6 +50,7 @@ export default {
           response => {
             localStorage.setItem("accessToken", response.data.accessToken);
             localStorage.setItem("refreshToken", response.data.refreshToken);
+            this.$router.replace(this.$route.query.redirect || '/')
           },
           err => {
             err.response.data.errors.forEach(e => {
