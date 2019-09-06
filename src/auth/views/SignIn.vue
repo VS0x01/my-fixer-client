@@ -38,6 +38,7 @@ export default {
       password: ""
     };
   },
+
   methods: {
     login() {
       this.$http
@@ -47,26 +48,15 @@ export default {
         })
         .then(
           response => {
-            if (response.hasOwnProperty("errors")) {
-              response.errors.forEach(err => {
-                this.commitError(err);
-              });
-            } else if (response.hasOwnProperty("error")) {
-              this.commitError(response.error);
-            } else {
-              localStorage.setItem("accessToken", response.data.accessToken);
-              localStorage.setItem("refreshToken", response.data.refreshToken);
-            }
+            localStorage.setItem("accessToken", response.data.accessToken);
+            localStorage.setItem("refreshToken", response.data.refreshToken);
           },
           err => {
-            this.commitError(err);
+            err.response.data.errors.forEach(e => {
+              this.$store.commit("addError", { error: e });
+            });
           }
         );
-    },
-    commitError(error) {
-      this.$store.commit("addError", {
-        error
-      });
     }
   }
 };
