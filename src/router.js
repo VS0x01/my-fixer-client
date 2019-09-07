@@ -60,7 +60,9 @@ const routes = [
     name: "manage-users",
     component: AdminComponent,
     meta: { requiresAuth: true },
-    beforeEnter: isAdmin
+    beforeEnter(to, from, next) {
+      next();
+    }
   },
   {
     path: "/logout",
@@ -95,9 +97,5 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
-
-function isAdmin() {
-  return true;
-}
 
 export default router;

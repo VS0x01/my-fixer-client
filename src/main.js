@@ -8,8 +8,7 @@ import * as VueGoogleMaps from "vue2-google-maps";
 
 Vue.config.productionTip = false;
 
-ApiServices.init("https://my-fixer-api.herokuapp.com/api");
-Vue.prototype.$http = ApiServices;
+Vue.prototype.$http = new ApiServices("https://my-fixer-api.herokuapp.com/api");
 
 Vue.use(VueGoogleMaps, {
   load: {

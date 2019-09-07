@@ -41,6 +41,8 @@ export default {
 
   methods: {
     login() {
+      this.$http.get('/accounts')
+
       this.$http
         .post("/accounts/sign-in", {
           email: this.email,
@@ -50,12 +52,12 @@ export default {
           response => {
             localStorage.setItem("accessToken", response.data.accessToken);
             localStorage.setItem("refreshToken", response.data.refreshToken);
-            this.$router.replace(this.$route.query.redirect || '/')
+            this.$store.commit("pushErrors", []);
+            this.$store.commit("updateAccountInfo", response.data.user);
+            this.$router.replace(this.$route.query.redirect || "/");
           },
           err => {
-            err.response.data.errors.forEach(e => {
-              this.$store.commit("addError", { error: e });
-            });
+            this.$store.commit("pushErrors", err.response.data.errors);
           }
         );
     }

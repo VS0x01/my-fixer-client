@@ -1,6 +1,9 @@
 export default {
   loggedIn() {
-    return !!localStorage.getItem("accessToken") && !!localStorage.getItem("refreshToken");
+    return (
+      !!localStorage.getItem("accessToken") &&
+      !!localStorage.getItem("refreshToken")
+    );
   },
 
   logout() {

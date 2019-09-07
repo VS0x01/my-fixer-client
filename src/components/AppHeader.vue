@@ -9,15 +9,13 @@
           src="@/assets/sarah_freeman.png"
           alt=""
         />
-        <span
-          @click="away"
-          class="header__person-name"
-        >
+        <span @click="away" class="header__person-name">
           Sarah Freeman
         </span>
       </section>
       <transition name="fade">
-        <router-link v-on-clickaway="away"
+        <router-link
+          v-on-clickaway="away"
           v-if="optionsMenuInflate"
           class="link superscription"
           to="/logout"
@@ -41,6 +39,12 @@ export default {
     return {
       optionsMenuInflate: false
     };
+  },
+
+  computed: {
+    account() {
+      return this.$store.getters.accountInfo;
+    }
   },
 
   methods: {
