@@ -1,16 +1,10 @@
 import axios from "axios";
-import auth from "@/auth/auth";
+import router from "@/router";
+import store from "@/store";
 
 function ApiService(baseURL) {
   this.init = baseURL => {
     axios.defaults.baseURL = baseURL;
-  };
-
-  this.refreshTokens = () => {
-    this.setHeaders({
-      Authorization: localStorage.getItem("refreshToken")
-    });
-    return this.get("/accounts/token");
   };
 
   this.setHeaders = (...headers) => {
@@ -23,10 +17,92 @@ function ApiService(baseURL) {
     } else axios.defaults.headers.common = {};
   };
 
-  this.get = resource => {
+  this.setAccessToken = token => {
+    this.setHeaders({
+      Authorization: token
+    });
+  };
+
+  /**
+   * Refresh tokens when expired.
+   **/
+  axios.interceptors.response.use(
+    response => response,
+    error => {
+      const tokenErrors = ["jwt expired", "invalid token", "token not found"];
+      const errorMessages = error.response.data.errors;
+      if (
+        errorMessages.filter(errorMessage => tokenErrors.includes(errorMessage))
+      ) {
+        return retryRequest(error);
+      }
+      throw error;
+    }
+  );
+
+  const refreshTokens = () => {
+    this.setAccessToken(store.getters.authTokens.refresh);
+    return this.get("/accounts/token");
+  };
+
+  let fetchingAccessToken = false;
+  let pendingRequests = [];
+  const pushPendingRequest = callback => {
+    pendingRequests.push(callback);
+  };
+
+  const retryRequest = async error => {
+    try {
+      const { response: errorResponse } = error;
+      const refreshToken = store.getters.authTokens.refresh;
+      if (!refreshToken) {
+        return await Promise.reject(error);
+      }
+
+      const retryOriginalRequest = await new Promise(resolve => {
+        pushPendingRequest(accessToken => {
+          errorResponse.config.headers.Authorization = accessToken;
+          resolve(this.customRequest(errorResponse.config));
+        });
+      });
+
+      if (!fetchingAccessToken) {
+        fetchingAccessToken = !fetchingAccessToken;
+        const response = await refreshTokens();
+        if (!response.data) {
+          return await Promise.reject(error);
+        }
+        const { accessToken: access, refreshToken: refresh } = response.data;
+        store
+          .dispatch("login", {
+            tokens: {
+              access,
+              refresh
+            }
+          })
+          .then(() => {
+            fetchingAccessToken = !fetchingAccessToken;
+            onAccessTokenFetchCompleted(access);
+          });
+      }
+      return retryOriginalRequest;
+    } catch (err) {
+      return await Promise.reject(err);
+    }
+  };
+
+  const onAccessTokenFetchCompleted = accessToken => {
+    if (accessToken) {
+      pendingRequests.forEach(callback => callback(accessToken));
+    } else store.dispatch("logout").then(() => router.push("/"));
+    pendingRequests = [];
+  };
+
+  this.get = (resource, params) => {
     return this.customRequest({
       method: "GET",
-      url: resource
+      url: resource,
+      params
     });
   };
 
@@ -46,10 +122,11 @@ function ApiService(baseURL) {
     });
   };
 
-  this.delete = resource => {
+  this.delete = (resource, params) => {
     return this.customRequest({
       method: "DELETE",
-      url: resource
+      url: resource,
+      params
     });
   };
 
@@ -65,21 +142,7 @@ function ApiService(baseURL) {
    *    - password
    **/
   this.customRequest = data => {
-    return axios(data).catch(reason => {
-      switch (reason.response.status) {
-        case 401:
-          this.refreshTokens().then(response => {
-            localStorage.setItem("accessToken", response.data.accessToken);
-            localStorage.setItem("refreshToken", response.data.refreshToken);
-          }, () => {
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
-          });
-          break;
-        default:
-          throw reason;
-      }
-    });
+    return axios(data);
   };
 
   if (baseURL) this.init(baseURL);

@@ -41,8 +41,6 @@ export default {
 
   methods: {
     login() {
-      this.$http.get('/accounts')
-
       this.$http
         .post("/accounts/sign-in", {
           email: this.email,
@@ -50,10 +48,15 @@ export default {
         })
         .then(
           response => {
-            localStorage.setItem("accessToken", response.data.accessToken);
-            localStorage.setItem("refreshToken", response.data.refreshToken);
-            this.$store.commit("pushErrors", []);
-            this.$store.commit("updateAccountInfo", response.data.user);
+            const { accessToken, refreshToken } = response.data;
+            this.$store.dispatch('login', {
+              account: response.data.user,
+              tokens: {
+                access: accessToken,
+                refresh: refreshToken,
+              }
+            });
+            this.$http.setAccessToken(accessToken);
             this.$router.replace(this.$route.query.redirect || "/");
           },
           err => {

@@ -1,18 +1,18 @@
 import VueRouter from "vue-router";
-import auth from "@/auth/auth";
 import SignIn from "@/auth/views/SignIn";
 import SignUp from "@/auth/views/SignUp";
 import MessengerComponent from "@/messenger/views/Messenger";
 import ProfileComponent from "@/profile/views/Profile";
 import SearchComponent from "@/search/views/Search";
 import AdminComponent from "@/admin/views/Admin";
+import store from "@/store";
 
 const routes = [
   {
     path: "/",
     name: "home" /** landing page **/,
     redirect: () => {
-      if (auth.loggedIn()) {
+      if (store.getters.loggedIn) {
         return {
           name: "search"
         };
@@ -63,15 +63,6 @@ const routes = [
     beforeEnter(to, from, next) {
       next();
     }
-  },
-  {
-    path: "/logout",
-    beforeEnter(to, from, next) {
-      auth.logout();
-      next({
-        name: "home"
-      });
-    }
   }
 ];
 
@@ -81,14 +72,14 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!auth.loggedIn()) {
+    if (!store.getters.loggedIn) {
       next({
         path: "/sign-in",
         query: { redirect: to.fullPath }
       });
     } else next();
   } else if (to.matched.some(record => record.meta.auth)) {
-    if (auth.loggedIn()) {
+    if (store.getters.loggedIn) {
       next({
         name: "search"
       });

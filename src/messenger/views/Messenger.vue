@@ -259,7 +259,7 @@ export default {
   },
 
   mounted() {
-    let socket = io("https://mighty-lion-13.localtunnel.me");
+    let socket = io("https://socket-io-chat.now.sh");
     this.socket = socket;
     socket.on("message", this.onMessage);
   },

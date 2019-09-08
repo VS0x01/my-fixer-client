@@ -14,14 +14,14 @@
         </span>
       </section>
       <transition name="fade">
-        <router-link
+        <span
+          @click="logout"
           v-on-clickaway="away"
           v-if="optionsMenuInflate"
           class="link superscription"
-          to="/logout"
         >
           Log out
-        </router-link>
+        </span>
       </transition>
     </section>
   </header>
@@ -44,10 +44,20 @@ export default {
   computed: {
     account() {
       return this.$store.getters.accountInfo;
+    },
+    tokens() {
+      return this.$store.getters.authTokens;
     }
   },
 
   methods: {
+    logout() {
+      const { refresh: refreshToken } = this.tokens;
+      this.$http.delete("/accounts/token", { refreshToken }).then(() => {
+        this.$store.dispatch("logout");
+        this.$router.push("/");
+      });
+    },
     away() {
       this.optionsMenuInflate = !this.optionsMenuInflate;
     }
@@ -95,7 +105,6 @@ export default {
 
   .link
     text-align: center
-    text-decoration: none
     white-space: nowrap
     padding: 5px
     border: 1px solid #DAE4F2
