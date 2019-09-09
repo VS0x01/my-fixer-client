@@ -32,17 +32,22 @@ function ApiService(baseURL) {
       const tokenErrors = ["jwt expired", "invalid token", "token not found"];
       const errorMessages = error.response.data.errors;
       if (
-        errorMessages.filter(errorMessage => tokenErrors.includes(errorMessage))
+        errorMessages.filter(errorMessage =>
+          tokenErrors.includes(errorMessage)
+        ) &&
+        !Object.keys(error.response.config.params).includes("refreshTokens")
       ) {
         return retryRequest(error);
       }
-      throw error;
+      return Promise.reject(error);
     }
   );
 
   const refreshTokens = () => {
     this.setAccessToken(store.getters.authTokens.refresh);
-    return this.get("/accounts/token");
+    return this.get("/accounts/token", {
+      refreshTokens: true
+    });
   };
 
   let fetchingAccessToken = false;
@@ -52,50 +57,48 @@ function ApiService(baseURL) {
   };
 
   const retryRequest = async error => {
-    try {
-      const { response: errorResponse } = error;
-      const refreshToken = store.getters.authTokens.refresh;
-      if (!refreshToken) {
-        return await Promise.reject(error);
-      }
+    const { response: errorResponse } = error;
+    const refreshToken = store.getters.authTokens.refresh;
+    if (!refreshToken) {
+      return Promise.reject(error);
+    }
 
-      const retryOriginalRequest = await new Promise(resolve => {
-        pushPendingRequest(accessToken => {
-          errorResponse.config.headers.Authorization = accessToken;
-          resolve(this.customRequest(errorResponse.config));
-        });
+    const retryOriginalRequest = new Promise(resolve => {
+      pushPendingRequest(accessToken => {
+        errorResponse.config.headers.Authorization = accessToken;
+        resolve(this.customRequest(errorResponse.config));
       });
+    });
 
-      if (!fetchingAccessToken) {
-        fetchingAccessToken = !fetchingAccessToken;
-        const response = await refreshTokens();
-        if (!response.data) {
-          return await Promise.reject(error);
-        }
-        const { accessToken: access, refreshToken: refresh } = response.data;
-        store
-          .dispatch("login", {
+    if (!fetchingAccessToken) {
+      fetchingAccessToken = !fetchingAccessToken;
+      refreshTokens().then(
+        response => {
+          const { accessToken: access, refreshToken: refresh } = response.data;
+          store.dispatch("login", {
             tokens: {
               access,
               refresh
             }
-          })
-          .then(() => {
-            fetchingAccessToken = !fetchingAccessToken;
-            onAccessTokenFetchCompleted(access);
           });
-      }
-      return retryOriginalRequest;
-    } catch (err) {
-      return await Promise.reject(err);
+        },
+        () => {
+          return false;
+        }
+      ).then((res) => {
+        fetchingAccessToken = !fetchingAccessToken;
+        onAccessTokenFetchCompleted(res);
+      }).finally(() => {
+        pendingRequests = [];
+      });
     }
+    return retryOriginalRequest;
   };
 
   const onAccessTokenFetchCompleted = accessToken => {
     if (accessToken) {
       pendingRequests.forEach(callback => callback(accessToken));
     } else store.dispatch("logout").then(() => router.push("/"));
-    pendingRequests = [];
   };
 
   this.get = (resource, params) => {
