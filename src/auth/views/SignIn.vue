@@ -49,15 +49,13 @@ export default {
         .then(
           response => {
             const { accessToken, refreshToken } = response.data;
-            this.$store.dispatch('login', {
+            this.$store.dispatch("login", {
               account: response.data.user,
               tokens: {
                 access: accessToken,
-                refresh: refreshToken,
+                refresh: refreshToken
               }
-            });
-            this.$http.setAccessToken(accessToken);
-            this.$router.replace(this.$route.query.redirect || "/");
+            }).then(() => this.$router.replace(this.$route.query.redirect || "/"));
           },
           err => {
             this.$store.commit("pushErrors", err.response.data.errors);

@@ -6,11 +6,11 @@
       <section class="header__person">
         <img
           class="header__person-photo"
-          src="@/assets/sarah_freeman.png"
+          :src="account.photo"
           alt=""
         />
         <span @click="away" class="header__person-name">
-          Sarah Freeman
+          {{ `${account.firstName} ${account.lastName}` }}
         </span>
       </section>
       <transition name="fade">
@@ -53,9 +53,11 @@ export default {
   methods: {
     logout() {
       const { refresh: refreshToken } = this.tokens;
-      this.$http.delete("/accounts/token", { refreshToken }).then(() => {
-        this.$store.dispatch("logout");
-        this.$router.push("/");
+      this.$http.delete("/accounts/token", { refreshToken }).then(responce => {
+        if (responce) {
+          this.$store.dispatch("logout");
+          this.$router.push("/");
+        }
       });
     },
     away() {

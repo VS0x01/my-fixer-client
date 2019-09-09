@@ -39,7 +39,7 @@ function ApiService(baseURL) {
       ) {
         return retryRequest(error);
       }
-      return Promise.reject(error);
+      throw error;
     }
   );
 
@@ -60,10 +60,10 @@ function ApiService(baseURL) {
     const { response: errorResponse } = error;
     const refreshToken = store.getters.authTokens.refresh;
     if (!refreshToken) {
-      return Promise.reject(error);
+      throw error;
     }
 
-    const retryOriginalRequest = new Promise(resolve => {
+    new Promise(resolve => {
       pushPendingRequest(accessToken => {
         errorResponse.config.headers.Authorization = accessToken;
         resolve(this.customRequest(errorResponse.config));
@@ -83,6 +83,8 @@ function ApiService(baseURL) {
           });
         },
         () => {
+          store.dispatch("logout");
+          router.push("/");
           return false;
         }
       ).then((res) => {
@@ -92,13 +94,11 @@ function ApiService(baseURL) {
         pendingRequests = [];
       });
     }
-    return retryOriginalRequest;
+    return false;
   };
 
   const onAccessTokenFetchCompleted = accessToken => {
-    if (accessToken) {
-      pendingRequests.forEach(callback => callback(accessToken));
-    } else store.dispatch("logout").then(() => router.push("/"));
+    if (accessToken) pendingRequests.forEach(callback => callback(accessToken));
   };
 
   this.get = (resource, params) => {

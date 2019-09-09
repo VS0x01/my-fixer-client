@@ -6,7 +6,17 @@
 
 <script>
 export default {
-  name: "app"
+  name: "app",
+  computed: {
+    accessToken() {
+      return this.$store.getters.authTokens.access;
+    }
+  },
+  watch: {
+    accessToken: function(val) {
+      this.$http.setAccessToken(val);
+    }
+  }
 };
 </script>
 
