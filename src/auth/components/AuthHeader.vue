@@ -128,9 +128,9 @@
         </g>
       </svg>
     </div>
-    <span class="link">
+    <span class="link link-question">
       {{ question }}
-      <router-link :to="link.URL">
+      <router-link tag="span" class="link" :to="link.URL">
         {{ link.text }}
       </router-link>
     </span>
@@ -147,31 +147,4 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
-@import '../../shared/sass/mixins'
-
-.header
-  display: flex
-  justify-content: space-between
-
-.logo svg
-  width: 138px
-  margin: 2px 0 0 141px
-
-  +phones
-    width: 75%
-    margin-left: 20px
-
-.link
-  margin: 28px 137px 0 0 !important
-
-  +phones
-    white-space: nowrap
-    display: flex
-    flex-flow: row wrap
-    margin: 28px 8px !important
-
-  a
-    +phones
-      margin: auto
-</style>
+<style lang="sass" scoped></style>

@@ -1,11 +1,29 @@
 import VueRouter from "vue-router";
-import SignIn from "@/auth/views/SignIn";
 import SignUp from "@/auth/views/SignUp";
+import SignUpAccountInfoFormComponent from "@/auth/components/sign-up/SignUpAccountInfoForm";
+import SignIn from "@/auth/views/SignIn";
+import SignInFormComponent from "@/auth/components/sign-in/SignInForm";
+import ResetPasswordRequestFormComponent from "@/auth/components/sign-in/ResetPasswordRequestForm";
+import ResetPasswordForm from "@/auth/components/sign-in/ResetPasswordForm";
+import EmailConfirmComponent from "@/auth/views/EmailConfirm";
 import MessengerComponent from "@/messenger/views/Messenger";
 import ProfileComponent from "@/profile/views/Profile";
 import SearchComponent from "@/search/views/Search";
 import AdminComponent from "@/admin/views/Admin";
 import store from "@/store";
+
+const signInMeta = {
+  ResetPassword: {
+    question: "Back to ",
+    URL: "/sign-in",
+    text: "Sign in"
+  },
+  login: {
+    question: "Do not have an account?",
+    URL: "/sign-up",
+    text: "Sign up"
+  }
+};
 
 const routes = [
   {
@@ -22,12 +40,46 @@ const routes = [
   {
     path: "/sign-in",
     component: SignIn,
+    children: [
+      {
+        path: "/",
+        component: SignInFormComponent,
+        meta: signInMeta.login
+      },
+      {
+        path: "reset-password/request",
+        name: "reset-password-request",
+        component: ResetPasswordRequestFormComponent,
+        meta: signInMeta.ResetPassword
+      },
+      {
+        path: "reset-password",
+        name: "reset-password",
+        component: ResetPasswordForm,
+        meta: signInMeta.login
+      }
+    ],
     meta: { auth: true }
   },
   {
     path: "/sign-up",
     component: SignUp,
+    children: [
+      {
+        path: "/",
+        component: SignUpAccountInfoFormComponent
+      }
+    ],
     meta: { auth: true }
+  },
+  {
+    path: "/confirm",
+    name: "confirm",
+    component: EmailConfirmComponent,
+    beforeEnter(to, from, next) {
+      Object.assign(to.meta, signInMeta.ResetPassword);
+      next();
+    }
   },
   {
     path: "/search",

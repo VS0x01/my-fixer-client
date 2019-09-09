@@ -4,11 +4,7 @@
 
     <section class="inflate">
       <section class="header__person">
-        <img
-          class="header__person-photo"
-          :src="account.photo"
-          alt=""
-        />
+        <img class="header__person-photo" :src="account.photo" alt="" />
         <span @click="away" class="header__person-name">
           {{ `${account.firstName} ${account.lastName}` }}
         </span>
@@ -28,8 +24,9 @@
 </template>
 
 <script>
-import { mixin as clickaway } from "vue-clickaway";
 import BreadcrumbsComponent from "@/components/Breadcrumbs";
+import { mapGetters } from "vuex";
+import { mixin as clickaway } from "vue-clickaway";
 
 export default {
   name: "AppHeader",
@@ -42,19 +39,17 @@ export default {
   },
 
   computed: {
-    account() {
-      return this.$store.getters.accountInfo;
-    },
-    tokens() {
-      return this.$store.getters.authTokens;
-    }
+    ...mapGetters({
+      account: "accountInfo",
+      tokens: "authTokens"
+    })
   },
 
   methods: {
     logout() {
       const { refresh: refreshToken } = this.tokens;
-      this.$http.delete("/accounts/token", { refreshToken }).then(responce => {
-        if (responce) {
+      this.$http.delete("/accounts/token", { refreshToken }).then(response => {
+        if (response) {
           this.$store.dispatch("logout");
           this.$router.push("/");
         }

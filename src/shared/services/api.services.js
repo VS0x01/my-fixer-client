@@ -63,36 +63,40 @@ function ApiService(baseURL) {
       throw error;
     }
 
-    new Promise(resolve => {
-      pushPendingRequest(accessToken => {
-        errorResponse.config.headers.Authorization = accessToken;
-        resolve(this.customRequest(errorResponse.config));
-      });
+    pushPendingRequest(accessToken => {
+      errorResponse.config.headers.Authorization = accessToken;
+      this.customRequest(errorResponse.config);
     });
 
     if (!fetchingAccessToken) {
       fetchingAccessToken = !fetchingAccessToken;
-      refreshTokens().then(
-        response => {
-          const { accessToken: access, refreshToken: refresh } = response.data;
-          store.dispatch("login", {
-            tokens: {
-              access,
-              refresh
-            }
-          });
-        },
-        () => {
-          store.dispatch("logout");
-          router.push("/");
-          return false;
-        }
-      ).then((res) => {
-        fetchingAccessToken = !fetchingAccessToken;
-        onAccessTokenFetchCompleted(res);
-      }).finally(() => {
-        pendingRequests = [];
-      });
+      refreshTokens()
+        .then(
+          response => {
+            const {
+              accessToken: access,
+              refreshToken: refresh
+            } = response.data;
+            store.dispatch("login", {
+              tokens: {
+                access,
+                refresh
+              }
+            });
+          },
+          () => {
+            store.dispatch("logout");
+            router.push("/");
+            return false;
+          }
+        )
+        .then(res => {
+          fetchingAccessToken = !fetchingAccessToken;
+          onAccessTokenFetchCompleted(res);
+        })
+        .finally(() => {
+          pendingRequests = [];
+        });
     }
     return false;
   };

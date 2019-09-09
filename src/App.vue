@@ -48,6 +48,25 @@ button
   display: flex
   flex-direction: column
 
+  .header
+    display: flex
+    justify-content: space-between
+
+    .logo svg
+      width: 138px
+      margin: 2px 0 0 141px
+
+      +phones
+        width: 75%
+        margin-left: 20px
+
+    .link-question
+      margin: 28px 137px 0 0
+      .link
+        margin: 0
+        font-weight: 600
+        color: #2A74DB
+
   .link
     text-decoration: none
     margin: 0 137px 0 0
