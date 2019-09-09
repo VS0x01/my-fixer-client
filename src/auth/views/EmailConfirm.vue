@@ -166,21 +166,21 @@ export default {
       width: calc(100vh + 132px)
       background: rgba(254, 254, 254, 0.45)
       box-shadow: 0 0 42px rgba(231, 231, 231, 0.13)
+    &#second
+      height: calc(100% - 140px)
+      width: calc(100% - 140px)
+      background: rgba(254, 254, 254, 0.45)
+      box-shadow: 0 0 42px rgba(231, 231, 231, 0.25)
     &#first
       height: calc(100% - 160px)
       width: calc(100% - 160px)
       background: rgba(254, 254, 254, 0.54)
       box-shadow: 0 0 42px rgba(231, 231, 231, 0.11)
-    &#second
-      height: calc(100% - 140px)
-      width: calc(100% - 140px)
-      background: rgba(254, 254, 254, 0.45)
-      box-shadow: 0 0 42px rgba(231, 231, 231, 0.36)
     &#inner
       flex-direction: column
       height: calc(100% - 180px)
       width: calc(100% - 180px)
-      background: rgba(254, 254, 254, 0.54)
+      background: rgba(255, 255, 255, 0.54)
       box-shadow: 0 0 42px rgba(231, 231, 231, 0.43)
       white-space: nowrap
   .congratulations
