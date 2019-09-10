@@ -11,7 +11,7 @@
       </section>
       <transition name="fade">
         <span
-          @click="logout"
+          @click="deleteTokens"
           v-on-clickaway="away"
           v-if="optionsMenuInflate"
           class="link superscription"
@@ -46,14 +46,21 @@ export default {
   },
 
   methods: {
-    logout() {
+    deleteTokens() {
       const { refresh: refreshToken } = this.tokens;
-      this.$http.delete("/accounts/token", { refreshToken }).then(response => {
-        if (response) {
-          this.$store.dispatch("logout");
-          this.$router.push("/");
-        }
-      });
+      if (refreshToken) {
+        this.$http
+          .delete("/accounts/token", { refreshToken })
+          .then(response => {
+            if (response) {
+              this.logout();
+            }
+          });
+      } else this.logout();
+    },
+    logout() {
+      this.$store.dispatch("logout");
+      this.$router.push("/");
     },
     away() {
       this.optionsMenuInflate = !this.optionsMenuInflate;

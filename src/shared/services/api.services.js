@@ -29,12 +29,19 @@ function ApiService(baseURL) {
   axios.interceptors.response.use(
     response => response,
     error => {
-      const tokenErrors = ["jwt expired", "invalid token", "token not found"];
+      const tokenErrors = [
+        "jwt expired",
+        "jwt malformed",
+        "jwt must be provided",
+        "invalid token",
+        "invalid signature",
+        "token not found"
+      ];
       const errorMessages = error.response.data.errors;
       if (
-        errorMessages.filter(errorMessage =>
-          tokenErrors.includes(errorMessage)
-        ) &&
+        errorMessages.some(errorMessage => {
+          return tokenErrors.includes(errorMessage.message);
+        }) &&
         !Object.keys(error.response.config.params).includes("refreshTokens")
       ) {
         return retryRequest(error);
@@ -56,16 +63,15 @@ function ApiService(baseURL) {
     pendingRequests.push(callback);
   };
 
-  const retryRequest = async error => {
+  const retryRequest = error => {
     const { response: errorResponse } = error;
-    const refreshToken = store.getters.authTokens.refresh;
-    if (!refreshToken) {
-      throw error;
-    }
 
-    pushPendingRequest(accessToken => {
-      errorResponse.config.headers.Authorization = accessToken;
-      this.customRequest(errorResponse.config);
+    const pendingRequest = new Promise(resolve => {
+      pushPendingRequest(accessToken => {
+        errorResponse.config.headers.Authorization = accessToken;
+        if (accessToken) resolve(this.customRequest(errorResponse.config));
+        else resolve(accessToken);
+      });
     });
 
     if (!fetchingAccessToken) {
@@ -77,17 +83,22 @@ function ApiService(baseURL) {
               accessToken: access,
               refreshToken: refresh
             } = response.data;
-            store.dispatch("login", {
-              tokens: {
-                access,
-                refresh
-              }
-            });
+            store
+              .dispatch("login", {
+                tokens: {
+                  access,
+                  refresh
+                }
+              })
+              .then(() => {
+                return access;
+              });
           },
           () => {
-            store.dispatch("logout");
-            router.push("/");
-            return false;
+            store.dispatch("logout").then(() => {
+              router.push("/");
+              return false;
+            });
           }
         )
         .then(res => {
@@ -98,11 +109,11 @@ function ApiService(baseURL) {
           pendingRequests = [];
         });
     }
-    return false;
+    return pendingRequest;
   };
 
   const onAccessTokenFetchCompleted = accessToken => {
-    if (accessToken) pendingRequests.forEach(callback => callback(accessToken));
+    pendingRequests.forEach(callback => callback(accessToken));
   };
 
   this.get = (resource, params) => {
