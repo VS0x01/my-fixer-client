@@ -119,9 +119,13 @@ button
     &::placeholder
       +superscription(Roboto, normal, 14px, 16px, 0.28px, rgba(135, 144, 167, 0.57))
 
-  .auth-form__input:focus
-    background: #FFF
-    border-left-color: #2A74DB
+    &:focus
+      background: #FFF
+      border-left-color: #2A74DB
+    &.invalid:focus
+      border-left-color: red
+    &.warn
+      border-color: red
 
   .auth-form__link
     align-self: flex-end

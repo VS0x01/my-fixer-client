@@ -3,12 +3,15 @@ import VueRouter from "vue-router";
 import router from "@/router";
 import store from "@/store";
 import App from "./App.vue";
+import Vuelidate from "vuelidate";
 import ApiServices from "@/shared/services/api.services";
 import * as VueGoogleMaps from "vue2-google-maps";
 
 Vue.config.productionTip = false;
 
 Vue.prototype.$http = new ApiServices("https://my-fixer-api.herokuapp.com/api");
+
+Vue.use(Vuelidate);
 
 Vue.use(VueGoogleMaps, {
   load: {

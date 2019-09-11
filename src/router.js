@@ -1,6 +1,7 @@
 import VueRouter from "vue-router";
 import SignUp from "@/auth/views/SignUp";
 import SignUpAccountInfoFormComponent from "@/auth/components/sign-up/SignUpAccountInfoForm";
+import CompleteYourAccountComponent from "@/auth/components/sign-up/CompleteYourAccount";
 import SignIn from "@/auth/views/SignIn";
 import SignInFormComponent from "@/auth/components/sign-in/SignInForm";
 import ResetPasswordRequestFormComponent from "@/auth/components/sign-in/ResetPasswordRequestForm";
@@ -68,6 +69,11 @@ const routes = [
       {
         path: "/",
         component: SignUpAccountInfoFormComponent
+      },
+      {
+        path: "set-password",
+        name: "set-password",
+        component: CompleteYourAccountComponent
       }
     ],
     meta: { auth: true }

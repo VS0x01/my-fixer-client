@@ -5,7 +5,12 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    account: {},
+    account: {
+      firstName: "",
+      lastName: "",
+      username: "",
+      email: "",
+    },
     tokens: {
       access: localStorage.getItem("accessToken") || "",
       refresh: localStorage.getItem("refreshToken") || ""
@@ -14,7 +19,6 @@ const store = new Vuex.Store({
   },
   getters: {
     accountInfo: state => {
-      //if(!state.account.keys.length) this.dispatch("manageAccountInfo");
       return state.account;
     },
     authTokens: state => {
@@ -53,7 +57,7 @@ const store = new Vuex.Store({
     /*manageAccountInfo({ commit, state }) {
       this.$http.setHeader(localStorage.getItem("accessToken"));
       this.$http.get();
-      //commit("updateAccountInfo", payload);
+      commit("updateAccountInfo", payload);
     }*/
   }
 });
