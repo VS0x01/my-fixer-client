@@ -23,25 +23,25 @@
             </svg>
           </select-base-component>
 
-          <label v-show="showResults === 0" for="query" class="input-label">
+          <label v-show="showResults" for="query" class="input-label">
             Search
           </label>
           <input
-            v-show="showResults === 0"
+            v-show="showResults"
             type="search"
             id="query"
             class="input"
             placeholder="Type your query..."
           />
           <label
-            v-show="showResults === 1"
+            v-show="!showResults"
             for="query_place"
             class="input-label"
           >
             Search
           </label>
           <gmap-autocomplete
-            v-show="showResults === 1"
+            v-show="!showResults"
             type="search"
             id="query_place"
             class="input"
@@ -166,7 +166,7 @@
           <span class="superscription" @click="showResults = !showResults">
             Show {{ showResults ? "map" : "results" }}
           </span>
-          <div class="search-results__sort" v-show="!showResults">
+          <div class="search-results__sort" v-show="showResults">
             <svg
               width="13"
               height="12"
@@ -219,8 +219,8 @@
             <label for="rating" class="sort-label">by rating</label>
           </div>
         </div>
-        <search-results-component v-show="!showResults" :people="people" />
-        <search-map-component v-show="showResults" :map="map" />
+        <search-results-component v-show="showResults" :people="people" />
+        <search-map-component v-show="!showResults" :map="map" />
       </div>
     </main>
   </div>
