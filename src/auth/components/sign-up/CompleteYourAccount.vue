@@ -1,10 +1,19 @@
 <template>
-  <form @submit.prevent="" class="auth-form">
+  <form @submit.prevent="signUp" class="auth-form">
     <h1>Complete your account</h1>
-    <set-password-form-component />
+    <set-password-form-component
+      @inputPassword="setPassword"
+      @inputConfirmPassword="setConfirmPassword"
+    />
     <button class="auth-form__submit" type="submit">Done!</button>
     <label for="terms" class="agreement">
-      <input type="checkbox" id="terms" name="agree" class="agree" value="terms" />
+      <input
+        type="checkbox"
+        id="terms"
+        name="agree"
+        class="agree"
+        value="terms"
+      />
       <span class="link link-question">
         I agree to the myFixer.com&nbsp;
       </span>
@@ -13,7 +22,13 @@
       </router-link>
     </label>
     <label for="privacy" class="agreement">
-      <input type="checkbox" id="privacy" name="agree" class="agree" value="privacy" />
+      <input
+        type="checkbox"
+        id="privacy"
+        name="agree"
+        class="agree"
+        value="privacy"
+      />
       <span class="link link-question">
         I agree to the myFixer.com&nbsp;
       </span>
@@ -21,7 +36,7 @@
         Privacy Policy
       </router-link>
     </label>
-    <img src="@/assets/recaptcha.png" class="recaptcha">
+    <img src="@/assets/recaptcha.png" class="recaptcha" />
   </form>
 </template>
 
@@ -30,7 +45,46 @@ import SetPasswordFormComponent from "@/auth/components/SetPasswordForm";
 
 export default {
   name: "CompleteYourAccount",
-  components: { SetPasswordFormComponent }
+  components: { SetPasswordFormComponent },
+  data() {
+    return {
+      password: "",
+      confirmPassword: ""
+    };
+  },
+
+  methods: {
+    setPassword(value) {
+      this.password = value;
+    },
+    setConfirmPassword(value) {
+      this.confirmPassword = value;
+    },
+    signUp() {
+      if (this.password === this.confirmPassword) {
+        const account = this.$store.getters.accountInfo;
+        this.$http
+          .post("/accounts", {
+            firstName: account.firstName,
+            lastName: account.lastName,
+            email: account.email,
+            password: this.password
+          })
+          .then(() => {
+            this.$router.push({
+              name: "confirm",
+              params: {
+                question: "Already have an account?",
+                URL: "/sign-in",
+                text: "Log In",
+                congrats: "You are almost ready to go!",
+                note: "Please check your email to activate your account"
+              }
+            });
+          });
+      }
+    }
+  }
 };
 </script>
 

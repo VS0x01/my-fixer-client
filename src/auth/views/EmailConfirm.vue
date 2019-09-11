@@ -112,10 +112,10 @@
                   fill="#ABABAB"
                 />
               </svg>
-              <span class="congratulations">You are almost ready to go!</span>
+              <span class="congratulations">{{ link.congrats }}</span>
               <span class="note">
-                Please check your email to activate your account</span
-              >
+                {{ link.note }}
+              </span>
             </div>
           </div>
         </div>
@@ -133,9 +133,11 @@ export default {
   computed: {
     link() {
       return {
-        question: this.$route.meta.question,
-        URL: this.$route.meta.URL,
-        text: this.$route.meta.text
+        question: this.$route.params.question,
+        URL: this.$route.params.URL,
+        text: this.$route.params.text,
+        congrats: this.$route.params.congrats,
+        note: this.$route.params.note,
       };
     }
   }

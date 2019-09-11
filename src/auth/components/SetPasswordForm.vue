@@ -21,11 +21,20 @@
 <script>
 export default {
   name: "SetPasswordForm",
+  model: {},
   data() {
     return {
       password: "",
       confirmPassword: ""
     };
+  },
+  watch: {
+    password: function(value) {
+      this.$emit("inputPassword", value);
+    },
+    confirmPassword: function(value) {
+      this.$emit("inputConfirmPassword", value);
+    }
   }
 };
 </script>

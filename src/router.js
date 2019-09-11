@@ -73,7 +73,11 @@ const routes = [
       {
         path: "set-password",
         name: "set-password",
-        component: CompleteYourAccountComponent
+        component: CompleteYourAccountComponent,
+        beforeEnter(to, from, next) {
+          if (from.path === "/sign-up") next();
+          else next("/");
+        }
       }
     ],
     meta: { auth: true }
@@ -83,8 +87,9 @@ const routes = [
     name: "confirm",
     component: EmailConfirmComponent,
     beforeEnter(to, from, next) {
-      Object.assign(to.meta, signInMeta.ResetPassword);
-      next();
+      const allowedPaths = ["/sign-up/set-password", "/sign-in"];
+      if (allowedPaths.includes(from.path) || to.query.token) next();
+      else next("/");
     }
   },
   {
