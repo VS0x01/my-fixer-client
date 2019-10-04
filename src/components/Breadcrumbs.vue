@@ -49,12 +49,8 @@ export default {
       text-decoration: none
       color: inherit
 
-    &::after
+    + li::before
       content: ">"
       margin: 0 12px 0 12px
       color: #0AD69C
-
-    &:last-of-type
-      &::after
-        display: none
 </style>
