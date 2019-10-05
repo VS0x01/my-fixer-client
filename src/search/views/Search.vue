@@ -255,7 +255,7 @@ export default {
   data() {
     return {
       results: ["results", "map"],
-      showResults: false,
+      showResults: true,
       people: [
         {
           id: 1,
