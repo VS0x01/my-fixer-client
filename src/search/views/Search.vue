@@ -221,6 +221,7 @@
         </div>
         <search-results-component v-show="showResults" :people="people" />
         <search-map-component v-show="!showResults" :map="map" />
+        <button @click="getPeople">Update</button>
       </div>
     </main>
   </div>
@@ -324,8 +325,16 @@ export default {
         classes.disabled = !date.isSame(today, "day");
       }
       return classes;
-    }
-  }
+    },
+    getPeople() {
+      this.people = [];
+      this.$http.get('/accounts')
+      .then((response) => {
+        console.log(response)
+        this.people = response.data.users;
+      });
+    },
+  },
 };
 </script>
 

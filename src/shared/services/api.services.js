@@ -29,33 +29,12 @@ function ApiService(baseURL) {
   axios.interceptors.response.use(
     response => response,
     error => {
-      const tokenErrors = [
-        "jwt expired",
-        "jwt malformed",
-        "jwt must be provided",
-        "invalid token",
-        "invalid signature",
-        "token not found"
-      ];
       const errorMessages = error.response.data.errors;
-      if (
-        errorMessages.some(errorMessage => {
-          return tokenErrors.includes(errorMessage.message);
-        }) &&
-        !Object.keys(error.response.config.params).includes("refreshTokens")
-      ) {
+      if (errorMessages.some(errorMessage => errorMessage.message.match("JsonWebTokenError")))
         return retryRequest(error);
-      }
       throw error;
     }
   );
-
-  const refreshTokens = () => {
-    this.setAccessToken(store.getters.authTokens.refresh);
-    return this.get("/accounts/token", {
-      refreshTokens: true
-    });
-  };
 
   let fetchingAccessToken = false;
   let pendingRequests = [];
@@ -66,33 +45,31 @@ function ApiService(baseURL) {
   const retryRequest = error => {
     const { response: errorResponse } = error;
 
-    const pendingRequest = new Promise(resolve => {
+    const pendingRequest = new Promise((resolve, reject) => {
       pushPendingRequest(accessToken => {
         errorResponse.config.headers.Authorization = accessToken;
         if (accessToken) resolve(this.customRequest(errorResponse.config));
-        else resolve(accessToken);
+        else reject("JsonWebTokenError");
       });
     });
 
     if (!fetchingAccessToken) {
       fetchingAccessToken = !fetchingAccessToken;
-      refreshTokens()
+      this.setAccessToken(store.getters.authTokens.refresh);
+      this.get("/accounts/token")
         .then(
           response => {
             const {
               accessToken: access,
               refreshToken: refresh
             } = response.data;
-            store
-              .dispatch("login", {
-                tokens: {
-                  access,
-                  refresh
-                }
-              })
-              .then(() => {
-                return access;
-              });
+            store.dispatch("login", {
+              tokens: {
+                access,
+                refresh
+              }
+            });
+            return access;
           },
           () => {
             store.dispatch("logout").then(() => {
@@ -101,9 +78,9 @@ function ApiService(baseURL) {
             });
           }
         )
-        .then(res => {
+        .then((token) => {
           fetchingAccessToken = !fetchingAccessToken;
-          onAccessTokenFetchCompleted(res);
+          onAccessTokenFetchCompleted(token);
         })
         .finally(() => {
           pendingRequests = [];
@@ -164,6 +141,7 @@ function ApiService(baseURL) {
   };
 
   if (baseURL) this.init(baseURL);
+  this.setAccessToken(store.getters.authTokens.access || "JWT refresh");
 }
 
 export default ApiService;

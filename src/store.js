@@ -42,7 +42,7 @@ const store = new Vuex.Store({
   },
   actions: {
     login({ commit }, payload) {
-      commit("updateAccountInfo", payload.account);
+      if (payload.account) commit("updateAccountInfo", payload.account);
       commit("setTokens", payload.tokens);
       commit("pushErrors", []);
       localStorage.setItem("accessToken", payload.tokens.access);
