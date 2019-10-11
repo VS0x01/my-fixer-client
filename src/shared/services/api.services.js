@@ -30,7 +30,11 @@ function ApiService(baseURL) {
     response => response,
     error => {
       const errorMessages = error.response.data.errors;
-      if (errorMessages.some(errorMessage => errorMessage.message.match("JsonWebTokenError")))
+      if (
+        errorMessages.some(errorMessage =>
+          errorMessage.message.match("JsonWebTokenError")
+        )
+      )
         return retryRequest(error);
       throw error;
     }
@@ -78,7 +82,7 @@ function ApiService(baseURL) {
             });
           }
         )
-        .then((token) => {
+        .then(token => {
           fetchingAccessToken = !fetchingAccessToken;
           onAccessTokenFetchCompleted(token);
         })
@@ -141,7 +145,7 @@ function ApiService(baseURL) {
   };
 
   if (baseURL) this.init(baseURL);
-  this.setAccessToken(store.getters.authTokens.access || "JWT refresh");
+  this.setAccessToken(store.getters.authTokens.access);
 }
 
 export default ApiService;

@@ -4,7 +4,7 @@
     <app-menu-component />
 
     <main class="content">
-      <form class="search-form">
+      <form class="search-form" @submit.prevent="getPeople">
         <section class="inputs-section">
           <label class="input-label">Location</label>
           <select-base-component :options="[]">
@@ -23,9 +23,7 @@
             </svg>
           </select-base-component>
 
-          <label v-show="showResults" for="query" class="input-label">
-            Search
-          </label>
+          <label v-show="showResults" for="query" class="input-label">Search</label>
           <input
             v-show="showResults"
             type="search"
@@ -33,13 +31,7 @@
             class="input"
             placeholder="Type your query..."
           />
-          <label
-            v-show="!showResults"
-            for="query_place"
-            class="input-label"
-          >
-            Search
-          </label>
+          <label v-show="!showResults" for="query_place" class="input-label">Search</label>
           <gmap-autocomplete
             v-show="!showResults"
             type="search"
@@ -163,9 +155,10 @@
 
       <div class="search-results">
         <div class="search-results__top">
-          <span class="superscription" @click="showResults = !showResults">
-            Show {{ showResults ? "map" : "results" }}
-          </span>
+          <span
+            class="superscription"
+            @click="showResults = !showResults"
+          >Show {{ showResults ? "map" : "results" }}</span>
           <div class="search-results__sort" v-show="showResults">
             <svg
               width="13"
@@ -221,7 +214,6 @@
         </div>
         <search-results-component v-show="showResults" :people="people" />
         <search-map-component v-show="!showResults" :map="map" />
-        <button @click="getPeople">Update</button>
       </div>
     </main>
   </div>
@@ -327,14 +319,11 @@ export default {
       return classes;
     },
     getPeople() {
-      this.people = [];
-      this.$http.get('/accounts')
-      .then((response) => {
-        console.log(response)
+      this.$http.get("/accounts").then(response => {
         this.people = response.data.users;
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
