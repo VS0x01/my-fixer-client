@@ -134,19 +134,15 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!store.getters.loggedIn) {
-      next({
-        path: "/sign-in",
-        query: { redirect: to.fullPath }
-      });
-    } else next();
-  } else if (to.matched.some(record => record.meta.auth)) {
-    if (store.getters.loggedIn) {
-      next({
-        name: "search"
-      });
-    } else next();
+  if (to.matched.some(record => record.meta.requiresAuth) && !store.getters.loggedIn) {
+    next({
+      path: "/sign-in",
+      query: { redirect: to.fullPath }
+    });
+  } else if (to.matched.some(record => record.meta.auth) && store.getters.loggedIn) {
+    next({
+      name: "search"
+    });
   } else {
     next();
   }

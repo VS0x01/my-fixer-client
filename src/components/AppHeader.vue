@@ -11,7 +11,7 @@
       </section>
       <transition name="fade">
         <span
-          @click="deleteTokens"
+          @click="logout"
           v-on-clickaway="away"
           v-if="optionsMenuInflate"
           class="link superscription"
@@ -25,7 +25,7 @@
 
 <script>
 import BreadcrumbsComponent from "@/components/Breadcrumbs";
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 import { mixin as clickaway } from "vue-clickaway";
 
 export default {
@@ -39,28 +39,14 @@ export default {
   },
 
   computed: {
-    ...mapGetters({
-      account: "accountInfo",
-      tokens: "authTokens"
+    ...mapState({
+      account: state => state.account,
     })
   },
 
   methods: {
-    deleteTokens() {
-      const { refresh: refreshToken } = this.tokens;
-      if (refreshToken) {
-        this.$http
-          .delete("/accounts/token", { refreshToken })
-          .then(response => {
-            if (response) {
-              this.logout();
-            }
-          });
-      } else this.logout();
-    },
     logout() {
       this.$store.dispatch("logout");
-      this.$router.push("/");
     },
     away() {
       this.optionsMenuInflate = !this.optionsMenuInflate;

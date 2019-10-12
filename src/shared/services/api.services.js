@@ -1,11 +1,11 @@
 import axios from "axios";
-import router from "@/router";
 import store from "@/store";
 
 function ApiService(baseURL) {
-  this.init = baseURL => {
-    axios.defaults.baseURL = baseURL;
-  };
+  let pendingRequests = [];
+  let fetchingAccessToken = false;
+
+  if (baseURL) axios.defaults.baseURL = baseURL;
 
   this.setHeaders = (...headers) => {
     if (headers.length) {
@@ -32,7 +32,7 @@ function ApiService(baseURL) {
       const errorMessages = error.response.data.errors;
       if (
         errorMessages.some(errorMessage =>
-          errorMessage.message.match("JsonWebTokenError")
+          errorMessage.message.match("TokenExpiredError")
         )
       )
         return retryRequest(error);
@@ -40,17 +40,11 @@ function ApiService(baseURL) {
     }
   );
 
-  let fetchingAccessToken = false;
-  let pendingRequests = [];
-  const pushPendingRequest = callback => {
-    pendingRequests.push(callback);
-  };
-
   const retryRequest = error => {
     const { response: errorResponse } = error;
 
     const pendingRequest = new Promise((resolve, reject) => {
-      pushPendingRequest(accessToken => {
+      pendingRequests.push(accessToken => {
         errorResponse.config.headers.Authorization = accessToken;
         if (accessToken) resolve(this.customRequest(errorResponse.config));
         else reject("JsonWebTokenError");
@@ -76,10 +70,7 @@ function ApiService(baseURL) {
             return access;
           },
           () => {
-            store.dispatch("logout").then(() => {
-              router.push("/");
-              return false;
-            });
+            store.dispatch("logout");
           }
         )
         .then(token => {
@@ -90,6 +81,7 @@ function ApiService(baseURL) {
           pendingRequests = [];
         });
     }
+
     return pendingRequest;
   };
 
@@ -143,9 +135,6 @@ function ApiService(baseURL) {
   this.customRequest = data => {
     return axios(data);
   };
-
-  if (baseURL) this.init(baseURL);
-  this.setAccessToken(store.getters.authTokens.access);
 }
 
 export default ApiService;

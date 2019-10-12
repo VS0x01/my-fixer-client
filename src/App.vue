@@ -9,12 +9,21 @@ export default {
   name: "app",
   computed: {
     accessToken() {
-      return this.$store.getters.authTokens.access;
+      return this.$store.state.tokens.access;
+    },
+    refreshToken() {
+      return this.$store.state.tokens.refresh;
     }
   },
   watch: {
-    accessToken: function(val) {
-      this.$http.setAccessToken(val);
+    accessToken: function(newVal) {
+      this.$http.setAccessToken(newVal);
+    },
+    refreshToken(newVal, oldVal) {
+      if(!newVal) {
+        this.$http.delete("/accounts/token", { refreshToken: oldVal });
+        this.$router.push("/");
+      }
     }
   }
 };

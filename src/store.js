@@ -4,6 +4,7 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
+  strict: process.env.NODE_ENV !== 'production',
   state: {
     account: {
       firstName: "",
@@ -18,12 +19,6 @@ const store = new Vuex.Store({
     errors: []
   },
   getters: {
-    accountInfo: state => {
-      return state.account;
-    },
-    authTokens: state => {
-      return state.tokens;
-    },
     loggedIn: state => {
       return Object.keys(state.tokens).filter(key => !!state.tokens[key])
         .length;
@@ -42,17 +37,17 @@ const store = new Vuex.Store({
   },
   actions: {
     login({ commit }, payload) {
-      if (payload.account) commit("updateAccountInfo", payload.account);
-      commit("setTokens", payload.tokens);
-      commit("pushErrors", []);
       localStorage.setItem("accessToken", payload.tokens.access);
       localStorage.setItem("refreshToken", payload.tokens.refresh);
+      commit("setTokens", payload.tokens);
+      commit("pushErrors", []);
+      if (payload.account) commit("updateAccountInfo", payload.account);
     },
     logout({ commit }) {
-      commit("setTokens", {});
-      commit("updateAccountInfo", {});
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
+      commit("setTokens", {});
+      commit("updateAccountInfo", {});
     }
     /*manageAccountInfo({ commit, state }) {
       this.$http.setHeader(localStorage.getItem("accessToken"));
