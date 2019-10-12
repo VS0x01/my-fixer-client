@@ -6,22 +6,22 @@ function ApiService(baseURL) {
   let fetchingAccessToken = false;
 
   if (baseURL) axios.defaults.baseURL = baseURL;
-
-  this.setHeaders = (...headers) => {
-    if (headers.length) {
-      headers.forEach(header => {
-        Object.keys(header).forEach(key => {
-          axios.defaults.headers.common[key] = header[key];
+    this.setHeaders = (...headers) => {
+      if (headers.length) {
+        headers.forEach(header => {
+          Object.keys(header).forEach(key => {
+            axios.defaults.headers.common[key] = header[key];
+          });
         });
-      });
-    } else axios.defaults.headers.common = {};
-  };
+      } else axios.defaults.headers.common = {};
+    };
 
   this.setAccessToken = token => {
     this.setHeaders({
       Authorization: token
     });
   };
+  this.setAccessToken(store.state.tokens.access);
 
   /**
    * Refresh tokens when expired.
