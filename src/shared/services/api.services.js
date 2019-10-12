@@ -29,10 +29,10 @@ function ApiService(baseURL) {
   axios.interceptors.response.use(
     response => response,
     error => {
-      const errorMessages = error.response.data.errors;
+      const errors = error.response.data.errors;
       if (
-        errorMessages.some(errorMessage =>
-          errorMessage.message.match("TokenExpiredError")
+        errors.some(error =>
+          error.name.match("TokenExpiredError")
         )
       )
         return retryRequest(error);
@@ -53,7 +53,7 @@ function ApiService(baseURL) {
 
     if (!fetchingAccessToken) {
       fetchingAccessToken = !fetchingAccessToken;
-      this.setAccessToken(store.getters.authTokens.refresh);
+      this.setAccessToken(store.state.tokens.refresh);
       this.get("/accounts/token")
         .then(
           response => {
