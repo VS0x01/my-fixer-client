@@ -32,9 +32,11 @@ function ApiService(baseURL) {
     error => {
       const errors = error.response.data.errors || [];
       if (
-        errors.some(error =>
-          error.name.match("TokenExpiredError")
+        errors.some(
+          error => error.name.match("TokenExpiredError")
         )
+        &&
+        !error.config.url.match("/token")
       ) return retryRequest(error);
       throw errors;
     }
@@ -71,6 +73,7 @@ function ApiService(baseURL) {
           },
           () => {
             store.dispatch("logout");
+            return false;
           }
         )
         .then(token => {
