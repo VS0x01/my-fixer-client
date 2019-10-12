@@ -56,7 +56,7 @@ export default {
               );
           },
           err => {
-            this.$store.commit("pushErrors", err.response.data.errors);
+            this.$store.commit("pushErrors", err);
           }
         );
     }

@@ -6,15 +6,16 @@ function ApiService(baseURL) {
   let fetchingAccessToken = false;
 
   if (baseURL) axios.defaults.baseURL = baseURL;
-    this.setHeaders = (...headers) => {
-      if (headers.length) {
-        headers.forEach(header => {
-          Object.keys(header).forEach(key => {
-            axios.defaults.headers.common[key] = header[key];
-          });
+
+  this.setHeaders = (...headers) => {
+    if (headers.length) {
+      headers.forEach(header => {
+        Object.keys(header).forEach(key => {
+          axios.defaults.headers.common[key] = header[key];
         });
-      } else axios.defaults.headers.common = {};
-    };
+      });
+    } else axios.defaults.headers.common = {};
+  };
 
   this.setAccessToken = token => {
     this.setHeaders({
@@ -29,14 +30,13 @@ function ApiService(baseURL) {
   axios.interceptors.response.use(
     response => response,
     error => {
-      const errors = error.response.data.errors;
+      const errors = error.response.data.errors || [];
       if (
         errors.some(error =>
           error.name.match("TokenExpiredError")
         )
-      )
-        return retryRequest(error);
-      throw error;
+      ) return retryRequest(error);
+      throw errors;
     }
   );
 
